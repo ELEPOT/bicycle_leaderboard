@@ -1,0 +1,20 @@
+table, td, tr, caption {
+    border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+td, tr {
+    text-align:center;
+    font-size: 22px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+caption {
+    font-size: 42px;
+}
+
+tr:hover {background-color: #ddd;}
