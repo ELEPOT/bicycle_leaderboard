@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from HTMLTable import HTMLTable
 
 app = Flask(__name__)
-@app.route("/")
+
 def leadboard():
     i = 1
     gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
