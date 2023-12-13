@@ -1,12 +1,13 @@
-<xml version="F2" board="ESP32 Dev Module" xmlns="https://developers.google.com/blockly/xml">
+<xml xmlns="https://developers.google.com/blockly/xml">
   <variables>
     <variable id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</variable>
-    <variable id="HKSusxq%BIuMi2EdI_@N">上一次偵測到磁鐵</variable>
     <variable id="g_}SOiw;ZuLn9|h-]2`E">借的卡號</variable>
+    <variable id=",LE?+Z3}h{,d8[sUJ?K%">text</variable>
+    <variable id="HKSusxq%BIuMi2EdI_@N">上一次偵測到磁鐵</variable>
     <variable id="fc*j!UWK[uMqi;Buu^l8">距離</variable>
     <variable id="Kp-H/z-LiyYR[PawP`n7">卡號</variable>
   </variables>
-  <block type="board_initializes_setup" id="0" x="130" y="50">
+  <block type="board_initializes_setup" id="0" x="150" y="-50">
     <field name="BOARD_TYPE">ESP32</field>
     <statement name="CONTENT">
       <block type="variables_set" id="t0;`_#El0vUm+Ateyr*h">
@@ -63,12 +64,12 @@
                           <block type="linkit_wifi_wait_until_ready" id="m=(Vt!7xfeC29MD[bqMI">
                             <value name="SSID">
                               <block type="text" id="~`vis*Z6Rfew`*F.S;Q9">
-                                <field name="TEXT">makerG103</field>
+                                <field name="TEXT">mist3</field>
                               </block>
                             </value>
                             <value name="PASSWORD">
                               <block type="text" id="de,U?wxoi,H*dS01Td5.">
-                                <field name="TEXT">G103maker</field>
+                                <field name="TEXT">juli0223</field>
                               </block>
                             </value>
                             <next>
@@ -85,6 +86,33 @@
                                         <field name="TEXT">Database</field>
                                       </block>
                                     </value>
+                                    <next>
+                                      <block type="fu_oled_initial" id="LTH#Y=_;B@qMH]Ig!`?;">
+                                        <field name="format">U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);</field>
+                                        <field name="display">U8G2_R0</field>
+                                        <field name="utf8">1</field>
+                                        <next>
+                                          <block type="fu_oled_setFont_chinese" id="GPzC-yFTR;g~mc#@;^R)">
+                                            <field name="font">u8g2_font_unifont_t_chinese1</field>
+                                            <next>
+                                              <block type="procedures_callnoreturn" id="_nVH_@YF]Ht;EQ^C_wsy">
+                                                <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                                                <value name="VAR">
+                                                  <block type="lists_create_with" id="K^|H`6E$VbS;AVpORjLg">
+                                                    <mutation items="1"></mutation>
+                                                    <value name="ADD0">
+                                                      <block type="text" id="Drh9]gCPi;r.@8D?d*:q">
+                                                        <field name="TEXT">借車請感應悠遊卡</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
                                   </block>
                                 </next>
                               </block>
@@ -155,10 +183,16 @@
                                   </block>
                                 </value>
                                 <statement name="DO0">
-                                  <block type="serial_println" id=")9#3WUFE:1c}QL=H=}}K">
-                                    <value name="CONTENT">
-                                      <block type="text" id="5wUdIJpqwE1iiuEqnT@/">
-                                        <field name="TEXT">User returning bike...</field>
+                                  <block type="procedures_callnoreturn" id="7;a5]VTXNfT7Si[hw2nN">
+                                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                                    <value name="VAR">
+                                      <block type="lists_create_with" id="!-4r.Cc2ijw0S%mYeKO*">
+                                        <mutation items="1"></mutation>
+                                        <value name="ADD0">
+                                          <block type="text" id="C6Ywtqu~TYi~z~R4/l0q">
+                                            <field name="TEXT"></field>
+                                          </block>
+                                        </value>
                                       </block>
                                     </value>
                                     <next>
@@ -180,33 +214,24 @@
                                           </block>
                                         </value>
                                         <next>
-                                          <block type="serial_println" id="#CuRj#y}$n_#!R^o=OK4">
-                                            <value name="CONTENT">
-                                              <block type="text" id=":`FsGYV}f0s!LTSeh13,">
-                                                <field name="TEXT">Writed to Database!</field>
+                                          <block type="variables_set3" id="lre3~(#0miEt:#K)klh`">
+                                            <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
+                                            <value name="DELTA">
+                                              <shadow type="math_number" id="j7F_KW3AS7Fnc}*[q-Lk">
+                                                <field name="NUM">0</field>
+                                              </shadow>
+                                              <block type="logic_boolean" id="CbPiQNt*}eAABeqTK:$L">
+                                                <field name="BOOL">FALSE</field>
                                               </block>
                                             </value>
                                             <next>
-                                              <block type="variables_set3" id="lre3~(#0miEt:#K)klh`">
-                                                <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
+                                              <block type="variables_set3" id="ohgmuJq/;z+hg52J#/@m">
+                                                <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
                                                 <value name="DELTA">
-                                                  <shadow type="math_number" id="j7F_KW3AS7Fnc}*[q-Lk">
+                                                  <shadow type="math_number" id="]w4=8@)?9F`awWV=I[{:">
                                                     <field name="NUM">0</field>
                                                   </shadow>
-                                                  <block type="logic_boolean" id="CbPiQNt*}eAABeqTK:$L">
-                                                    <field name="BOOL">FALSE</field>
-                                                  </block>
                                                 </value>
-                                                <next>
-                                                  <block type="variables_set3" id="ohgmuJq/;z+hg52J#/@m">
-                                                    <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
-                                                    <value name="DELTA">
-                                                      <shadow type="math_number" id="]w4=8@)?9F`awWV=I[{:">
-                                                        <field name="NUM">0</field>
-                                                      </shadow>
-                                                    </value>
-                                                  </block>
-                                                </next>
                                               </block>
                                             </next>
                                           </block>
@@ -307,65 +332,79 @@
       </block>
     </next>
   </block>
-  <block type="serial_println" id="y[MO]D$r}?+bS)mPk4.?" disabled="true" x="510" y="110">
-    <value name="CONTENT">
-      <block type="inout_analog_read" id="7DS[6wsKVN#-jtQKR.^V">
-        <field name="PIN">A0</field>
-      </block>
-    </value>
-  </block>
-  <block type="serial_println" id="r[lqI$46jp/R_e^*_W72" disabled="true" x="470" y="1270">
-    <value name="CONTENT">
-      <block type="inout_analog_read" id="X)Co6[b~Fa;VjN4sGEvI">
-        <field name="PIN">A0</field>
-      </block>
-    </value>
-  </block>
-  <block type="controls_if" id="@fk`}eqZ%@dYG{rK/}wz" disabled="true" x="570" y="1310">
-    <mutation else="1"></mutation>
-    <value name="IF0">
-      <block type="logic_compare" id="6/c7;QO/!93a4{kAG,Th">
-        <field name="OP">LT</field>
-        <value name="A">
-          <block type="inout_analog_read" id=";69QZHD2rUeClDbn?V7$">
-            <field name="PIN">A0</field>
-          </block>
-        </value>
-        <value name="B">
-          <block type="math_number" id="{4xew_~E$I?)0[^!!3;Y">
-            <field name="NUM">2048</field>
+  <block type="procedures_defnoreturn" id="`*IAhVej^Qt}U7PlBj?z" x="930" y="750">
+    <field name="NAME">DrawText</field>
+    <value name="VAR">
+      <shadow type="lists_create_with" inline="true">
+        <mutation items="0"></mutation>
+      </shadow>
+      <block type="lists_create_with" id=")E723sn:)vy|$w$|5nCX" inline="true">
+        <mutation items="1"></mutation>
+        <value name="ADD0">
+          <block type="variables_set2" id="Ja6+nxC|I`TeYdQW+f@s">
+            <field name="TYPE">String</field>
+            <field name="VAR" id=",LE?+Z3}h{,d8[sUJ?K%">text</field>
           </block>
         </value>
       </block>
     </value>
-    <statement name="DO0">
-      <block type="controls_if" id="d1?GmS7=sh9q$2.X0j_H">
-        <value name="IF0">
-          <block type="logic_negate" id="2N-~i*CWm1C|`LeH,wAV">
-            <value name="BOOL">
-              <block type="variables_get" id="j{{CjDA(+-Q8QIKMAfa-">
-                <field name="VAR" id="HKSusxq%BIuMi2EdI_@N">上一次偵測到磁鐵</field>
+    <statement name="STACK">
+      <block type="serial_println" id=")9#3WUFE:1c}QL=H=}}K">
+        <value name="CONTENT">
+          <block type="variables_get" id="IlNivhyA(jT=$Sj#!v_^">
+            <field name="VAR" id=",LE?+Z3}h{,d8[sUJ?K%">text</field>
+          </block>
+        </value>
+        <next>
+          <block type="fu_oled_nextPage" id="-$F;hipSvzUhupW3C?0+">
+            <statement name="draw">
+              <block type="fu_oled_clear" id="^%8IzI+%5*REt3r(|iC[">
+                <next>
+                  <block type="fu_oled_drawUTF8" id="a]=N5Fs],R(CNg/9AzNP">
+                    <value name="x">
+                      <shadow type="math_number" id=".C}6.bCbAp%O0wkFFO|$">
+                        <field name="NUM">0</field>
+                      </shadow>
+                    </value>
+                    <value name="y">
+                      <shadow type="math_number" id="Mvek!kj1z8!{IN5c5@*o">
+                        <field name="NUM">14</field>
+                      </shadow>
+                    </value>
+                    <value name="str">
+                      <block type="variables_get" id="^94dDio6l|zM2dJEio-o">
+                        <field name="VAR" id=",LE?+Z3}h{,d8[sUJ?K%">text</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
               </block>
-            </value>
+            </statement>
+            <next>
+              <block type="fu_oled_drawStr" id="@CBTt)O}vNh:JfK_ik2N" disabled="true">
+                <value name="x">
+                  <shadow type="math_number" id="?br0b6B(ya!c1Q8*v]u(">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+                <value name="y">
+                  <shadow type="math_number" id="{lUqBBmNs.a59%lN[Wk$">
+                    <field name="NUM">14</field>
+                  </shadow>
+                </value>
+                <value name="str">
+                  <block type="variables_get" id="8Vj$Qb=:oNRMt4(OI(wc">
+                    <field name="VAR" id=",LE?+Z3}h{,d8[sUJ?K%">text</field>
+                  </block>
+                </value>
+              </block>
+            </next>
           </block>
-        </value>
-      </block>
-    </statement>
-    <statement name="ELSE">
-      <block type="variables_set3" id="r~X!SK=67F)l.frfK=CB">
-        <field name="VAR" id="HKSusxq%BIuMi2EdI_@N">上一次偵測到磁鐵</field>
-        <value name="DELTA">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-          <block type="logic_boolean" id="Wt$Kh{F%@lqO:t8uc}[9">
-            <field name="BOOL">FALSE</field>
-          </block>
-        </value>
+        </next>
       </block>
     </statement>
   </block>
-  <block type="interrupts_attach" id="ytSeCGU!ALm0/tT:vii$" x="150" y="1430">
+  <block type="interrupts_attach" id="ytSeCGU!ALm0/tT:vii$" x="110" y="1510">
     <field name="PIN">2</field>
     <field name="MODE">FALLING</field>
     <statement name="CONTENT">

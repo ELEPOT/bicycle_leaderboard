@@ -1,10 +1,13 @@
-//Generated Date: Thu, 07 Dec 2023 06:57:30 GMT
+//Generated Date: Wed, 13 Dec 2023 14:07:50 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
 #include <PN532.h>
 #include <NfcAdapter.h>
 #include <WiFi.h>
+#include <U8g2lib.h>
+#include <Wire.h>
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 #include <WiFiClientSecure.h>
 
 boolean _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
@@ -17,11 +20,20 @@ String myNFC_UID="";
 uint8_t myNFC_UID_array[] = { 0, 0, 0, 0, 0, 0, 0 };
 uint8_t myNFC_UID_Length;
 
-char _lwifi_ssid[] = "makerG103";
-char _lwifi_pass[] = "G103maker";
+char _lwifi_ssid[] = "mist3";
+char _lwifi_pass[] = "juli0223";
 const char* asId="AKfycbyR-Yp-uu4nIvnjvnkILaQ5AX8yFxp-UpBO-Sqs0su3ai1N_BvQsz_Q";
 String sheetId="";
 String sheetTag="";
+
+void DrawText(String text) {
+  Serial.println(text);
+  u8g2.firstPage();
+  do {
+    u8g2.clear();
+    u8g2.drawUTF8(0,14,String(text).c_str());
+  } while ( u8g2.nextPage() );
+}
 
 void interrupt_2(){
   if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
@@ -84,6 +96,9 @@ void  sendToGoogleSheets(const String& dateInclude,const String& data)
 void setup()
 {
   nfc.begin();
+  u8g2.begin();
+  u8g2.setFont(u8g2_font_10x20_me);
+  u8g2.enableUTF8Print();
   nfc.setPassiveActivationRetries(0xFF);
   nfc.SAMConfig();
   WiFi.disconnect();
@@ -94,6 +109,8 @@ void setup()
   delay(300);
   sheetId="1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI";
   sheetTag=URLEncode("Database");
+  u8g2.setFont(u8g2_font_unifont_t_chinese1);
+  DrawText("借車請感應悠遊卡");
   Serial.begin(9600);
 
   attachInterrupt(2,interrupt_2,FALLING);
@@ -108,9 +125,8 @@ void loop()
     Serial.println(_E5_8D_A1_E8_99_9F);
     if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
       if (_E5_8D_A1_E8_99_9F == _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F) {
-        Serial.println("User returning bike...");
+        DrawText("");
         sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
-        Serial.println("Writed to Database!");
         _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
         _E8_B7_9D_E9_9B_A2 = 0;
       } else {
