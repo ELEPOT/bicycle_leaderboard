@@ -1,4 +1,4 @@
-//Generated Date: Wed, 13 Dec 2023 14:07:50 GMT
+//Generated Date: Thu, 14 Dec 2023 08:48:00 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -12,16 +12,16 @@ U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
 boolean _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
 String _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F = "";
-boolean _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_A3_81_E9_90_B5 = false;
 double _E8_B7_9D_E9_9B_A2 = 0;
+int _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 = 0;
 PN532_I2C pn532i2c(Wire);
 PN532 nfc(pn532i2c);
 String myNFC_UID="";
 uint8_t myNFC_UID_array[] = { 0, 0, 0, 0, 0, 0, 0 };
 uint8_t myNFC_UID_Length;
 
-char _lwifi_ssid[] = "mist3";
-char _lwifi_pass[] = "juli0223";
+char _lwifi_ssid[] = "DESKTOP-O20GETT 5663";
+char _lwifi_pass[] = "<71uM768";
 const char* asId="AKfycbyR-Yp-uu4nIvnjvnkILaQ5AX8yFxp-UpBO-Sqs0su3ai1N_BvQsz_Q";
 String sheetId="";
 String sheetTag="";
@@ -35,11 +35,14 @@ void DrawText(String text) {
   } while ( u8g2.nextPage() );
 }
 
-void interrupt_2(){
+void IRAM_ATTR OnMagnetEnter()
+{
   if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
-    _E8_B7_9D_E9_9B_A2 = _E8_B7_9D_E9_9B_A2 + 1.2;
-    Serial.println((String("Distance (m): ")+String(_E8_B7_9D_E9_9B_A2)));
-    _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_A3_81_E9_90_B5 = true;
+    if (millis() - _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 > 50) {
+      _E8_B7_9D_E9_9B_A2 = _E8_B7_9D_E9_9B_A2 + 1.2;
+      DrawText(String("里程： ")+String(_E8_B7_9D_E9_9B_A2)+String(" m"));
+      _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 = millis();
+    }
   }
 }
 
@@ -110,10 +113,11 @@ void setup()
   sheetId="1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI";
   sheetTag=URLEncode("Database");
   u8g2.setFont(u8g2_font_unifont_t_chinese1);
+  pinMode(0, INPUT);
+  attachInterrupt(0,OnMagnetEnter,FALLING);
   DrawText("借車請感應悠遊卡");
   Serial.begin(9600);
 
-  attachInterrupt(2,interrupt_2,FALLING);
 }
 
 void loop()
@@ -125,15 +129,16 @@ void loop()
     Serial.println(_E5_8D_A1_E8_99_9F);
     if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
       if (_E5_8D_A1_E8_99_9F == _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F) {
-        DrawText("");
+        DrawText("寫入資料庫中...");
         sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
+        DrawText("還車成功！請離卡");
         _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
         _E8_B7_9D_E9_9B_A2 = 0;
       } else {
-        Serial.println("Wrong Card Number!");
+        DrawText("卡號錯誤！請換卡");
       }
     } else {
-      Serial.println("User borrowed bike!");
+      DrawText("借車成功！請離卡");
       _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F = _E5_8D_A1_E8_99_9F;
       _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = true;
     }
@@ -145,5 +150,10 @@ void loop()
       myNFC_UID=readFromNFC_UID();
     }
     Serial.println("Card leaved!");
+    if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
+      DrawText("還車請感應悠遊卡");
+    } else {
+      DrawText("借車請感應悠遊卡");
+    }
   }
 }
