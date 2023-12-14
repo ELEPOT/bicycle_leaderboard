@@ -404,6 +404,36 @@
                     </next>
                   </block>
                 </statement>
+                <next>
+                  <block type="procedures_callnoreturn" id="|x@2jP{Qj6mR$%7lE0Xf">
+                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                    <value name="VAR">
+                      <block type="lists_create_with" id=",[e$|t*3^?^|q-Y2WgJ9" inline="0">
+                        <mutation items="1"></mutation>
+                        <value name="ADD0">
+                          <block type="text_join" id="w:Smjw5z]VX,GH@:(z:K">
+                            <mutation items="3"></mutation>
+                            <value name="ADD0">
+                              <block type="text" id="bYdbWCJQ`@Ibk5[qiDHs">
+                                <field name="TEXT">里程： </field>
+                              </block>
+                            </value>
+                            <value name="ADD1">
+                              <block type="variables_get" id="Ugz^;596GkHLNno~R9M|">
+                                <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
+                              </block>
+                            </value>
+                            <value name="ADD2">
+                              <block type="text" id="3%1Ke6@0?$~OCCRx3|-q">
+                                <field name="TEXT"> m</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </next>
               </block>
             </next>
           </block>
@@ -515,44 +545,14 @@
                   </block>
                 </value>
                 <next>
-                  <block type="procedures_callnoreturn" id="|x@2jP{Qj6mR$%7lE0Xf">
-                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
-                    <value name="VAR">
-                      <block type="lists_create_with" id=",[e$|t*3^?^|q-Y2WgJ9" inline="0">
-                        <mutation items="1"></mutation>
-                        <value name="ADD0">
-                          <block type="text_join" id="w:Smjw5z]VX,GH@:(z:K">
-                            <mutation items="3"></mutation>
-                            <value name="ADD0">
-                              <block type="text" id="bYdbWCJQ`@Ibk5[qiDHs">
-                                <field name="TEXT">里程： </field>
-                              </block>
-                            </value>
-                            <value name="ADD1">
-                              <block type="variables_get" id="Ugz^;596GkHLNno~R9M|">
-                                <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
-                              </block>
-                            </value>
-                            <value name="ADD2">
-                              <block type="text" id="3%1Ke6@0?$~OCCRx3|-q">
-                                <field name="TEXT"> m</field>
-                              </block>
-                            </value>
-                          </block>
-                        </value>
-                      </block>
+                  <block type="variables_set3" id="PvL?UgSO1W1wd4cLW!K@">
+                    <field name="VAR" id=":y#T=09_GcH_/=s2@f8F">上一次偵測到的時間</field>
+                    <value name="DELTA">
+                      <shadow type="math_number" id="Ij.8yoQU73Kt3TH;@R9O">
+                        <field name="NUM">0</field>
+                      </shadow>
+                      <block type="millis" id="a$;~AAlvv3*2Hkm|5bi{"></block>
                     </value>
-                    <next>
-                      <block type="variables_set3" id="PvL?UgSO1W1wd4cLW!K@">
-                        <field name="VAR" id=":y#T=09_GcH_/=s2@f8F">上一次偵測到的時間</field>
-                        <value name="DELTA">
-                          <shadow type="math_number" id="Ij.8yoQU73Kt3TH;@R9O">
-                            <field name="NUM">0</field>
-                          </shadow>
-                          <block type="millis" id="a$;~AAlvv3*2Hkm|5bi{"></block>
-                        </value>
-                      </block>
-                    </next>
                   </block>
                 </next>
               </block>

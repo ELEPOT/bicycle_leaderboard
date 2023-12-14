@@ -1,4 +1,4 @@
-//Generated Date: Thu, 14 Dec 2023 08:48:00 GMT
+//Generated Date: Thu, 14 Dec 2023 09:09:58 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -40,7 +40,6 @@ void IRAM_ATTR OnMagnetEnter()
   if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
     if (millis() - _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 > 50) {
       _E8_B7_9D_E9_9B_A2 = _E8_B7_9D_E9_9B_A2 + 1.2;
-      DrawText(String("里程： ")+String(_E8_B7_9D_E9_9B_A2)+String(" m"));
       _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 = millis();
     }
   }
@@ -156,4 +155,5 @@ void loop()
       DrawText("借車請感應悠遊卡");
     }
   }
+  DrawText(String("里程： ")+String(_E8_B7_9D_E9_9B_A2)+String(" m"));
 }
