@@ -1,13 +1,15 @@
+# 匯入所需模組
 import pygsheets as sheet
 from flask import Flask, render_template
 from HTMLTable import HTMLTable
-
 app = Flask(__name__)
+# 以下函式會在使用者訪問網站時呼叫
 
 
 @app.route("/")
 def leaderboard():
     i = 1
+    # 開啟 Google 表單
     gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
     url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
     sht = gc.open_by_url(url)
@@ -15,6 +17,7 @@ def leaderboard():
 
     total_distances = {}
 
+    # 把同卡號的里程數加起來，直到讀到表單最後一行為止
     for row in wks:
         distance = row[2]
         card_id = row[1]
@@ -31,21 +34,21 @@ def leaderboard():
 
         i += 1
 
+    # 將每個卡號的總里程數從大到小排列
     total_distances = list(total_distances.items())
-
     total_distances.sort(key=lambda elem: elem[1], reverse=True)
 
+    # 將卡號與里程數轉換成 html 表格
     table = HTMLTable(caption='共享單車排行榜')
 
     table.append_header_rows([('名次', '卡號', '距離 (m)')])
 
-    print(total_distances)
-
     for ranking, (card_id, distance) in enumerate(total_distances):
         table.append_data_rows([(ranking + 1, card_id, distance)])
-
+    # 將 html 表格回傳給使用者
     return render_template('index.html', table=table.to_html())
 
 
+# 開始伺服器
 if __name__ == '__main__':
     app.run()

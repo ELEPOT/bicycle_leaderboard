@@ -1,4 +1,4 @@
-//Generated Date: Thu, 14 Dec 2023 09:09:58 GMT
+//Generated Date: Fri, 15 Dec 2023 16:31:10 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -25,6 +25,24 @@ char _lwifi_pass[] = "<71uM768";
 const char* asId="AKfycbyR-Yp-uu4nIvnjvnkILaQ5AX8yFxp-UpBO-Sqs0su3ai1N_BvQsz_Q";
 String sheetId="";
 String sheetTag="";
+
+void HandleCard(String _E5_8D_A1_E8_99_9F) {
+  if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
+    if (_E5_8D_A1_E8_99_9F == _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F) {
+      DrawText("寫入資料庫中...");
+      sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
+      DrawText("還車成功！請離卡");
+      _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
+      _E8_B7_9D_E9_9B_A2 = 0;
+    } else {
+      DrawText("卡號錯誤！請換卡");
+    }
+  } else {
+    DrawText("借車成功！請離卡");
+    _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F = _E5_8D_A1_E8_99_9F;
+    _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = true;
+  }
+}
 
 void DrawText(String text) {
   Serial.println(text);
@@ -124,36 +142,20 @@ void loop()
   myNFC_UID_Length=0;
   myNFC_UID=readFromNFC_UID();
   if ((myNFC_UID!="")) {
-    String _E5_8D_A1_E8_99_9F = myNFC_UID;
-    Serial.println(_E5_8D_A1_E8_99_9F);
-    if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
-      if (_E5_8D_A1_E8_99_9F == _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F) {
-        DrawText("寫入資料庫中...");
-        sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
-        DrawText("還車成功！請離卡");
-        _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
-        _E8_B7_9D_E9_9B_A2 = 0;
-      } else {
-        DrawText("卡號錯誤！請換卡");
-      }
-    } else {
-      DrawText("借車成功！請離卡");
-      _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F = _E5_8D_A1_E8_99_9F;
-      _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = true;
-    }
-    Serial.println("Waiting til card leaves...");
     myNFC_UID_Length=0;
     myNFC_UID=readFromNFC_UID();
+    HandleCard(myNFC_UID);
     while ((myNFC_UID!="")) {
       myNFC_UID_Length=0;
       myNFC_UID=readFromNFC_UID();
     }
-    Serial.println("Card leaved!");
     if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
       DrawText("還車請感應悠遊卡");
     } else {
       DrawText("借車請感應悠遊卡");
     }
   }
-  DrawText(String("里程： ")+String(_E8_B7_9D_E9_9B_A2)+String(" m"));
+  if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
+    DrawText(String("里程： ")+String(_E8_B7_9D_E9_9B_A2)+String(" m"));
+  }
 }

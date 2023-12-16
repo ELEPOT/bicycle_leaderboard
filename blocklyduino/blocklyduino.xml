@@ -3,11 +3,11 @@
     <variable id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</variable>
     <variable id="g_}SOiw;ZuLn9|h-]2`E">借的卡號</variable>
     <variable id=",LE?+Z3}h{,d8[sUJ?K%">text</variable>
+    <variable id="Kp-H/z-LiyYR[PawP`n7">卡號</variable>
     <variable id="fc*j!UWK[uMqi;Buu^l8">距離</variable>
     <variable id=":y#T=09_GcH_/=s2@f8F">上一次偵測到的時間</variable>
-    <variable id="Kp-H/z-LiyYR[PawP`n7">卡號</variable>
   </variables>
-  <block type="board_initializes_setup" id="0" x="150" y="-50">
+  <block type="board_initializes_setup" id="0" x="90" y="30">
     <field name="BOARD_TYPE">ESP32</field>
     <statement name="CONTENT">
       <block type="variables_set" id="t0;`_#El0vUm+Ateyr*h">
@@ -141,274 +141,95 @@
         </next>
       </block>
     </statement>
-    <next>
-      <block type="initializes_loop" id="1">
-        <statement name="CONTENT">
-          <block type="pn532i2c_loop" id="C7`cj;77iyu63R[A(5.=">
-            <next>
-              <block type="controls_if" id=":,2RB?H}dym2D75FBuek">
-                <value name="IF0">
-                  <block type="pn532i2c_checkUID" id="7;6gv:9VSenOh?DP55uE"></block>
-                </value>
-                <statement name="DO0">
-                  <block type="variables_set" id="oR)o%^3oGSwL;+qW1iC+">
-                    <field name="POSITION">local</field>
-                    <field name="TYPE">String</field>
-                    <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
-                    <value name="VALUE">
-                      <shadow type="math_number" id="A+yaxvp.0lR-{R!-Z;%4">
-                        <field name="NUM">0</field>
-                      </shadow>
-                      <block type="pn532i2c_getUID" id="rACV}-oyA:Gnh+I,F#t{"></block>
+  </block>
+  <block type="initializes_loop" id="1" x="90" y="630">
+    <statement name="CONTENT">
+      <block type="pn532i2c_loop" id="C7`cj;77iyu63R[A(5.=">
+        <next>
+          <block type="controls_if" id=":,2RB?H}dym2D75FBuek">
+            <value name="IF0">
+              <block type="pn532i2c_checkUID" id="7;6gv:9VSenOh?DP55uE"></block>
+            </value>
+            <statement name="DO0">
+              <block type="pn532i2c_loop" id=".(b,/hybl+}LNh.9}?2y">
+                <next>
+                  <block type="procedures_callnoreturn" id="1-j,#K*wf^B9djgxGpkY">
+                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="HandleCard"></mutation>
+                    <value name="VAR">
+                      <block type="lists_create_with" id="`!1?/(Ft.:Nuc?I-d+1q">
+                        <mutation items="1"></mutation>
+                        <value name="ADD0">
+                          <block type="pn532i2c_getUID" id="4rP4{C2t~{K|(};;%f/a"></block>
+                        </value>
+                      </block>
                     </value>
                     <next>
-                      <block type="serial_println" id="o$zAnIn~-_#9sO7tO+`w">
-                        <value name="CONTENT">
-                          <block type="variables_get" id="|MNz$yMXH6Jf/^,9SQkK">
-                            <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
-                          </block>
+                      <block type="controls_whileUntil" id=",%WZ5roFo+Y|D5Mtb.Ll">
+                        <field name="MODE">WHILE</field>
+                        <value name="BOOL">
+                          <block type="pn532i2c_checkUID" id="zs!j#5sU,QZ$u$`{Hq]D"></block>
                         </value>
+                        <statement name="DO">
+                          <block type="pn532i2c_loop" id="Mb;_!JGqJ$bX$f}8^thE"></block>
+                        </statement>
                         <next>
-                          <block type="controls_if" id="mjf_*L!Ey|([eek[Mxmy">
+                          <block type="controls_if" id="Yt.26@^rMJBNjaGD,;x|">
                             <mutation else="1"></mutation>
                             <value name="IF0">
-                              <block type="variables_get" id="duJ6,c17Mz|(Z+.izM#:">
+                              <block type="variables_get" id="$`XL0A0=2P3^oYPO^Xf~">
                                 <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
                               </block>
                             </value>
                             <statement name="DO0">
-                              <block type="controls_if" id="*hUl-N;8C)yG,~u]qfvK">
-                                <mutation else="1"></mutation>
-                                <value name="IF0">
-                                  <block type="logic_compare" id="=_NMx;?*%pQfeYW=|/aA">
-                                    <field name="OP">EQ</field>
-                                    <value name="A">
-                                      <block type="variables_get" id="tos$THZk@Q5DI8(UOl$-">
-                                        <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
-                                      </block>
-                                    </value>
-                                    <value name="B">
-                                      <block type="variables_get" id="bsYc*_;ZFtF)oxy+45zj">
-                                        <field name="VAR" id="g_}SOiw;ZuLn9|h-]2`E">借的卡號</field>
+                              <block type="procedures_callnoreturn" id="Z4t@TA/sw5(c7J?cCa$3">
+                                <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                                <value name="VAR">
+                                  <block type="lists_create_with" id="N!q3/O#h1+!wLQj@cWzu">
+                                    <mutation items="1"></mutation>
+                                    <value name="ADD0">
+                                      <block type="text" id="E{M23caLHbXY]zYk|Fn!">
+                                        <field name="TEXT">還車請感應悠遊卡</field>
                                       </block>
                                     </value>
                                   </block>
                                 </value>
-                                <statement name="DO0">
-                                  <block type="procedures_callnoreturn" id="7;a5]VTXNfT7Si[hw2nN">
-                                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
-                                    <value name="VAR">
-                                      <block type="lists_create_with" id="!-4r.Cc2ijw0S%mYeKO*">
-                                        <mutation items="1"></mutation>
-                                        <value name="ADD0">
-                                          <block type="text" id="C6Ywtqu~TYi~z~R4/l0q">
-                                            <field name="TEXT">寫入資料庫中...</field>
-                                          </block>
-                                        </value>
-                                      </block>
-                                    </value>
-                                    <next>
-                                      <block type="sendToGoogle" id="Svxwmptww03Unc08ZcH8">
-                                        <field name="dateInclude">1</field>
-                                        <value name="data">
-                                          <block type="data_join" id="07l8,Sy#[ZgU3r~B{9co" inline="false">
-                                            <mutation items="2"></mutation>
-                                            <value name="ADD0">
-                                              <block type="variables_get" id="dO|ua2Z}t|cSO@@BOBvm">
-                                                <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
-                                              </block>
-                                            </value>
-                                            <value name="ADD1">
-                                              <block type="variables_get" id="dp^s*u(7]0)eneY2[~o8">
-                                                <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
-                                              </block>
-                                            </value>
-                                          </block>
-                                        </value>
-                                        <next>
-                                          <block type="procedures_callnoreturn" id="_G7i[WCmL$Y)93dHosQ]">
-                                            <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
-                                            <value name="VAR">
-                                              <block type="lists_create_with" id=",n3UD=^eRddjpWGqbRL(">
-                                                <mutation items="1"></mutation>
-                                                <value name="ADD0">
-                                                  <block type="text" id="3ozz3$Z}U[D_=u`{zHI?">
-                                                    <field name="TEXT">還車成功！請離卡</field>
-                                                  </block>
-                                                </value>
-                                              </block>
-                                            </value>
-                                            <next>
-                                              <block type="variables_set3" id="lre3~(#0miEt:#K)klh`">
-                                                <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
-                                                <value name="DELTA">
-                                                  <shadow type="math_number" id="j7F_KW3AS7Fnc}*[q-Lk">
-                                                    <field name="NUM">0</field>
-                                                  </shadow>
-                                                  <block type="logic_boolean" id="CbPiQNt*}eAABeqTK:$L">
-                                                    <field name="BOOL">FALSE</field>
-                                                  </block>
-                                                </value>
-                                                <next>
-                                                  <block type="variables_set3" id="ohgmuJq/;z+hg52J#/@m">
-                                                    <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
-                                                    <value name="DELTA">
-                                                      <shadow type="math_number" id="]w4=8@)?9F`awWV=I[{:">
-                                                        <field name="NUM">0</field>
-                                                      </shadow>
-                                                    </value>
-                                                  </block>
-                                                </next>
-                                              </block>
-                                            </next>
-                                          </block>
-                                        </next>
-                                      </block>
-                                    </next>
-                                  </block>
-                                </statement>
-                                <statement name="ELSE">
-                                  <block type="procedures_callnoreturn" id="IS=^iF^*Ahh}W7%KRoSY">
-                                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
-                                    <value name="VAR">
-                                      <block type="lists_create_with" id="=aK![zJs;nm+oD^fK|py">
-                                        <mutation items="1"></mutation>
-                                        <value name="ADD0">
-                                          <block type="text" id="TK3O,9TW-LD)*[XQRcD@">
-                                            <field name="TEXT">卡號錯誤！請換卡</field>
-                                          </block>
-                                        </value>
-                                      </block>
-                                    </value>
-                                  </block>
-                                </statement>
                               </block>
                             </statement>
                             <statement name="ELSE">
-                              <block type="procedures_callnoreturn" id="7x?Qt|14r:3jFjIn2z*X">
+                              <block type="procedures_callnoreturn" id="BY6|(m~TBngv`RJC_L/l">
                                 <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
                                 <value name="VAR">
-                                  <block type="lists_create_with" id="YqWyC*@_52SXbaH+~9P1">
+                                  <block type="lists_create_with" id="?Zgg`dLW^zSH14Ey%[+6">
                                     <mutation items="1"></mutation>
                                     <value name="ADD0">
-                                      <block type="text" id="~:dBmonS(^v!(c^ZCX:|">
-                                        <field name="TEXT">借車成功！請離卡</field>
+                                      <block type="text" id="Epxi;:[dFJsM@m?agNN7">
+                                        <field name="TEXT">借車請感應悠遊卡</field>
                                       </block>
                                     </value>
                                   </block>
                                 </value>
-                                <next>
-                                  <block type="variables_set3" id="[p#BqG)e5ZM6S~)hsn?f">
-                                    <field name="VAR" id="g_}SOiw;ZuLn9|h-]2`E">借的卡號</field>
-                                    <value name="DELTA">
-                                      <shadow type="math_number">
-                                        <field name="NUM">0</field>
-                                      </shadow>
-                                      <block type="variables_get" id="yHzA4+Z.AFn499;KPCjk">
-                                        <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
-                                      </block>
-                                    </value>
-                                    <next>
-                                      <block type="variables_set3" id=";oU/(z=8Sg;@y.DjU3.*">
-                                        <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
-                                        <value name="DELTA">
-                                          <shadow type="math_number">
-                                            <field name="NUM">0</field>
-                                          </shadow>
-                                          <block type="logic_boolean" id=";7:%/Pu{=:QcB8o^?C}(">
-                                            <field name="BOOL">TRUE</field>
-                                          </block>
-                                        </value>
-                                      </block>
-                                    </next>
-                                  </block>
-                                </next>
                               </block>
                             </statement>
-                            <next>
-                              <block type="serial_println" id="EsUgh+ZN%fp{DX1,an,k">
-                                <value name="CONTENT">
-                                  <block type="text" id="MVkb)!C7!X)W1^X#Ed.*">
-                                    <field name="TEXT">Waiting til card leaves...</field>
-                                  </block>
-                                </value>
-                                <next>
-                                  <block type="pn532i2c_loop" id=".(b,/hybl+}LNh.9}?2y">
-                                    <next>
-                                      <block type="controls_whileUntil" id=",%WZ5roFo+Y|D5Mtb.Ll">
-                                        <field name="MODE">WHILE</field>
-                                        <value name="BOOL">
-                                          <block type="pn532i2c_checkUID" id="zs!j#5sU,QZ$u$`{Hq]D"></block>
-                                        </value>
-                                        <statement name="DO">
-                                          <block type="pn532i2c_loop" id="Mb;_!JGqJ$bX$f}8^thE"></block>
-                                        </statement>
-                                        <next>
-                                          <block type="serial_println" id="y`)n1Pus){];Bg4E`jdB">
-                                            <value name="CONTENT">
-                                              <block type="text" id="_$hZeApy4zOFI~S#tHq+">
-                                                <field name="TEXT">Card leaved!</field>
-                                              </block>
-                                            </value>
-                                            <next>
-                                              <block type="controls_if" id="Yt.26@^rMJBNjaGD,;x|">
-                                                <mutation else="1"></mutation>
-                                                <value name="IF0">
-                                                  <block type="variables_get" id="$`XL0A0=2P3^oYPO^Xf~">
-                                                    <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
-                                                  </block>
-                                                </value>
-                                                <statement name="DO0">
-                                                  <block type="procedures_callnoreturn" id="Z4t@TA/sw5(c7J?cCa$3">
-                                                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
-                                                    <value name="VAR">
-                                                      <block type="lists_create_with" id="N!q3/O#h1+!wLQj@cWzu">
-                                                        <mutation items="1"></mutation>
-                                                        <value name="ADD0">
-                                                          <block type="text" id="E{M23caLHbXY]zYk|Fn!">
-                                                            <field name="TEXT">還車請感應悠遊卡</field>
-                                                          </block>
-                                                        </value>
-                                                      </block>
-                                                    </value>
-                                                  </block>
-                                                </statement>
-                                                <statement name="ELSE">
-                                                  <block type="procedures_callnoreturn" id="BY6|(m~TBngv`RJC_L/l">
-                                                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
-                                                    <value name="VAR">
-                                                      <block type="lists_create_with" id="?Zgg`dLW^zSH14Ey%[+6">
-                                                        <mutation items="1"></mutation>
-                                                        <value name="ADD0">
-                                                          <block type="text" id="Epxi;:[dFJsM@m?agNN7">
-                                                            <field name="TEXT">借車請感應悠遊卡</field>
-                                                          </block>
-                                                        </value>
-                                                      </block>
-                                                    </value>
-                                                  </block>
-                                                </statement>
-                                              </block>
-                                            </next>
-                                          </block>
-                                        </next>
-                                      </block>
-                                    </next>
-                                  </block>
-                                </next>
-                              </block>
-                            </next>
                           </block>
                         </next>
                       </block>
                     </next>
                   </block>
-                </statement>
-                <next>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="controls_if" id="|vr(]a,.%UYB9Ov184J{">
+                <value name="IF0">
+                  <block type="variables_get" id="eywN||ozk~Hj-(n^}psg">
+                    <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
+                  </block>
+                </value>
+                <statement name="DO0">
                   <block type="procedures_callnoreturn" id="|x@2jP{Qj6mR$%7lE0Xf">
                     <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
                     <value name="VAR">
-                      <block type="lists_create_with" id=",[e$|t*3^?^|q-Y2WgJ9" inline="0">
+                      <block type="lists_create_with" id=",[e$|t*3^?^|q-Y2WgJ9" inline="false">
                         <mutation items="1"></mutation>
                         <value name="ADD0">
                           <block type="text_join" id="w:Smjw5z]VX,GH@:(z:K">
@@ -433,15 +254,191 @@
                       </block>
                     </value>
                   </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="sI~[*FE}f,)1+*+T)kIj" x="750" y="610">
+    <field name="NAME">HandleCard</field>
+    <value name="VAR">
+      <shadow type="lists_create_with" inline="true">
+        <mutation items="0"></mutation>
+      </shadow>
+      <block type="lists_create_with" id="?!EGS60Uak,884lnaOpo" inline="true">
+        <mutation items="1"></mutation>
+        <value name="ADD0">
+          <block type="variables_set2" id="m7`+vKndbWT3:/UTHRtI">
+            <field name="TYPE">String</field>
+            <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <statement name="STACK">
+      <block type="controls_if" id="mjf_*L!Ey|([eek[Mxmy">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="variables_get" id="duJ6,c17Mz|(Z+.izM#:">
+            <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="controls_if" id="*hUl-N;8C)yG,~u]qfvK">
+            <mutation else="1"></mutation>
+            <value name="IF0">
+              <block type="logic_compare" id="=_NMx;?*%pQfeYW=|/aA">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="variables_get" id="tos$THZk@Q5DI8(UOl$-">
+                    <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="variables_get" id="bsYc*_;ZFtF)oxy+45zj">
+                    <field name="VAR" id="g_}SOiw;ZuLn9|h-]2`E">借的卡號</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="procedures_callnoreturn" id="7;a5]VTXNfT7Si[hw2nN">
+                <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                <value name="VAR">
+                  <block type="lists_create_with" id="!-4r.Cc2ijw0S%mYeKO*">
+                    <mutation items="1"></mutation>
+                    <value name="ADD0">
+                      <block type="text" id="C6Ywtqu~TYi~z~R4/l0q">
+                        <field name="TEXT">寫入資料庫中...</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="sendToGoogle" id="Svxwmptww03Unc08ZcH8">
+                    <field name="dateInclude">1</field>
+                    <value name="data">
+                      <block type="data_join" id="07l8,Sy#[ZgU3r~B{9co" inline="false">
+                        <mutation items="2"></mutation>
+                        <value name="ADD0">
+                          <block type="variables_get" id="dO|ua2Z}t|cSO@@BOBvm">
+                            <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
+                          </block>
+                        </value>
+                        <value name="ADD1">
+                          <block type="variables_get" id="dp^s*u(7]0)eneY2[~o8">
+                            <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="procedures_callnoreturn" id="_G7i[WCmL$Y)93dHosQ]">
+                        <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                        <value name="VAR">
+                          <block type="lists_create_with" id=",n3UD=^eRddjpWGqbRL(">
+                            <mutation items="1"></mutation>
+                            <value name="ADD0">
+                              <block type="text" id="3ozz3$Z}U[D_=u`{zHI?">
+                                <field name="TEXT">還車成功！請離卡</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set3" id="lre3~(#0miEt:#K)klh`">
+                            <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
+                            <value name="DELTA">
+                              <shadow type="math_number" id="j7F_KW3AS7Fnc}*[q-Lk">
+                                <field name="NUM">0</field>
+                              </shadow>
+                              <block type="logic_boolean" id="CbPiQNt*}eAABeqTK:$L">
+                                <field name="BOOL">FALSE</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set3" id="ohgmuJq/;z+hg52J#/@m">
+                                <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
+                                <value name="DELTA">
+                                  <shadow type="math_number" id="]w4=8@)?9F`awWV=I[{:">
+                                    <field name="NUM">0</field>
+                                  </shadow>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <statement name="ELSE">
+              <block type="procedures_callnoreturn" id="IS=^iF^*Ahh}W7%KRoSY">
+                <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                <value name="VAR">
+                  <block type="lists_create_with" id="=aK![zJs;nm+oD^fK|py">
+                    <mutation items="1"></mutation>
+                    <value name="ADD0">
+                      <block type="text" id="TK3O,9TW-LD)*[XQRcD@">
+                        <field name="TEXT">卡號錯誤！請換卡</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </statement>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="procedures_callnoreturn" id="7x?Qt|14r:3jFjIn2z*X">
+            <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+            <value name="VAR">
+              <block type="lists_create_with" id="YqWyC*@_52SXbaH+~9P1">
+                <mutation items="1"></mutation>
+                <value name="ADD0">
+                  <block type="text" id="~:dBmonS(^v!(c^ZCX:|">
+                    <field name="TEXT">借車成功！請離卡</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set3" id="[p#BqG)e5ZM6S~)hsn?f">
+                <field name="VAR" id="g_}SOiw;ZuLn9|h-]2`E">借的卡號</field>
+                <value name="DELTA">
+                  <shadow type="math_number">
+                    <field name="NUM">0</field>
+                  </shadow>
+                  <block type="variables_get" id="yHzA4+Z.AFn499;KPCjk">
+                    <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set3" id=";oU/(z=8Sg;@y.DjU3.*">
+                    <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
+                    <value name="DELTA">
+                      <shadow type="math_number">
+                        <field name="NUM">0</field>
+                      </shadow>
+                      <block type="logic_boolean" id=";7:%/Pu{=:QcB8o^?C}(">
+                        <field name="BOOL">TRUE</field>
+                      </block>
+                    </value>
+                  </block>
                 </next>
               </block>
             </next>
           </block>
         </statement>
       </block>
-    </next>
+    </statement>
   </block>
-  <block type="procedures_defnoreturn" id="`*IAhVej^Qt}U7PlBj?z" x="890" y="730">
+  <block type="procedures_defnoreturn" id="`*IAhVej^Qt}U7PlBj?z" x="90" y="1750">
     <field name="NAME">DrawText</field>
     <value name="VAR">
       <shadow type="lists_create_with" inline="true">
@@ -494,7 +491,7 @@
       </block>
     </statement>
   </block>
-  <block type="esp32_irq_pin_task" id="bB.st`]9ILddudo]U4oJ" x="830" y="1190">
+  <block type="esp32_irq_pin_task" id="bB.st`]9ILddudo]U4oJ" x="90" y="1970">
     <value name="F_NAME">
       <block type="text" id="y6!PPC081/*e$4j4?ZI8">
         <field name="TEXT">OnMagnetEnter</field>
