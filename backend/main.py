@@ -44,7 +44,7 @@ def leaderboard():
     table.append_header_rows([('名次', '卡號', '距離 (m)')])
 
     for ranking, (card_id, distance) in enumerate(total_distances):
-        table.append_data_rows([(ranking + 1, card_id, distance)])
+        table.append_data_rows([(ranking + 1, card_id, round(distance))])
     # 將 html 表格回傳給使用者
     return render_template('index.html', table=table.to_html())
 

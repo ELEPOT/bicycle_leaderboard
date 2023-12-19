@@ -1,4 +1,4 @@
-//Generated Date: Fri, 15 Dec 2023 16:31:10 GMT
+//Generated Date: Mon, 18 Dec 2023 13:21:56 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -20,8 +20,8 @@ String myNFC_UID="";
 uint8_t myNFC_UID_array[] = { 0, 0, 0, 0, 0, 0, 0 };
 uint8_t myNFC_UID_Length;
 
-char _lwifi_ssid[] = "DESKTOP-O20GETT 5663";
-char _lwifi_pass[] = "<71uM768";
+char _lwifi_ssid[] = "ELEPOT_DESKTOP";
+char _lwifi_pass[] = "hikari00";
 const char* asId="AKfycbyR-Yp-uu4nIvnjvnkILaQ5AX8yFxp-UpBO-Sqs0su3ai1N_BvQsz_Q";
 String sheetId="";
 String sheetTag="";

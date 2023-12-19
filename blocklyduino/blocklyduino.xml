@@ -2,8 +2,8 @@
   <variables>
     <variable id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</variable>
     <variable id="g_}SOiw;ZuLn9|h-]2`E">借的卡號</variable>
-    <variable id=",LE?+Z3}h{,d8[sUJ?K%">text</variable>
     <variable id="Kp-H/z-LiyYR[PawP`n7">卡號</variable>
+    <variable id=",LE?+Z3}h{,d8[sUJ?K%">text</variable>
     <variable id="fc*j!UWK[uMqi;Buu^l8">距離</variable>
     <variable id=":y#T=09_GcH_/=s2@f8F">上一次偵測到的時間</variable>
   </variables>
@@ -61,12 +61,12 @@
                           <block type="linkit_wifi_wait_until_ready" id="m=(Vt!7xfeC29MD[bqMI">
                             <value name="SSID">
                               <block type="text" id="~`vis*Z6Rfew`*F.S;Q9">
-                                <field name="TEXT">DESKTOP-O20GETT 5663</field>
+                                <field name="TEXT">ELEPOT_DESKTOP</field>
                               </block>
                             </value>
                             <value name="PASSWORD">
                               <block type="text" id="de,U?wxoi,H*dS01Td5.">
-                                <field name="TEXT">&lt;71uM768</field>
+                                <field name="TEXT">hikari00</field>
                               </block>
                             </value>
                             <next>
