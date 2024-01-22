@@ -1,13 +1,12 @@
 # 匯入所需模組
 import pygsheets as sheet
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from HTMLTable import HTMLTable
 app = Flask(__name__)
 # 以下函式會在使用者訪問網站時呼叫
 
 
-@app.route("/")
-def leaderboard():
+def get_sorted_total_distance():
     i = 1
     # 開啟 Google 表單
     gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
@@ -23,7 +22,6 @@ def leaderboard():
         card_id = row[1]
 
         if distance == '' or card_id == '':
-            print('STOP')
             break
 
         else:
@@ -38,6 +36,13 @@ def leaderboard():
     total_distances = list(total_distances.items())
     total_distances.sort(key=lambda elem: elem[1], reverse=True)
 
+    return total_distances
+
+
+@app.route("/")
+def leaderboard():
+    total_distances = get_sorted_total_distance()
+
     # 將卡號與里程數轉換成 html 表格
     table = HTMLTable(caption='共享單車排行榜')
 
@@ -47,6 +52,16 @@ def leaderboard():
         table.append_data_rows([(ranking + 1, card_id, round(distance))])
     # 將 html 表格回傳給使用者
     return render_template('index.html', table=table.to_html())
+
+
+@app.route("/data/send/")
+def get_ranking():
+    total_distances = get_sorted_total_distance()
+    for ranking, (card_id, distance) in enumerate(total_distances):
+        if card_id == request.args.get('id'):
+            return str(ranking + 1)
+
+    raise f"Cannot get ranking of {request.args.get('id')}"
 
 
 # 開始伺服器
