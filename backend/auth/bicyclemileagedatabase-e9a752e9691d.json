@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bicyclemileagedatabase",
+  "private_key_id": "e9a752e9691db6ecc28b17e0a2f4722a6936596b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDVw8e9a+SpGVH6\nXunHSVxikHmNmKGpLjCTeTqLGztOD31WJ0H7DG38YiVE0WFtLWrn9RE6cuUYxvHn\nStkBuIQdlyLG3hbaTFIh03G3TXDWETBF0Hvf7+0xDHJczk4eXghvOoVgmFk8Uc5c\nBYgATdHO0EspbDUXtPzTRPy/AEi7Z9RTxGg1mKVpOzmVvfxS5QqjPk5RL5mjNSGn\n0XjjZVE2VSIN9q3FLocyqndtJuaYiyFd7rMW6r8MlF5HJPK0yiSKDY+fh5+K35rr\nmX3/2EhS072xVKbdAAvoduMkRFSzFNlNAgZL1EPyMm7p9v/cLl3oyBMlhR71fz3L\nEQlCV3VjAgMBAAECggEAGzo2KUriU6WNewn21fLiqQ1E5kOwJ6fh+Q7CZbCAw8cW\nTFBwx4TER5bKr3LJ6YmU6dmdqaezxY2lhzPR4zW44jn7bIAiQgjhlzxi6hmbizCi\nSOoutQ3O1OYEdQy0B4sroNs/3Nda2mODGNZ9hahj1mdSg4KsWoorf890L/Hd0bzC\nl6yermVweESRs5JytZ9nZJJUS1kjjeAivHqjjLYVF7k6h0Y/wuy41kOq6W/9w2bA\n1tGj581zEZnp5JK1UO0kaem5DbCeAk5ozBXQa5EIVUJwP/KZUI59pnTjB4t4wOf4\nGDsoZIh1lHGrPKK9LF9z6YnCZYkMs1jwFAipNM1YqQKBgQD9LmeFTyTxFHwF6fiK\nY51h1fksTjKWDV7wO4xq5QB+GIytEMrie34RWRcVphGm1xrlY+UsL8x9uBDBLowH\ntHJrmg9SBSzDQzXfjfg8BUTGAYEcT2tjtH88k81new1oGZm5tXi7Wr4IZ0h8Rlq3\no5wozdGTEMHAAKm9fp14fJYheQKBgQDYJQjIvXIBp1l+KK1JFTpZW4Qg9qlycv3/\nG9jbiMs7DkFXjDZ7EhqzfiOrOVbPj37LTP6SV/r5y7h8OHVJCkuwr6XTgpjxA4WC\njb6Pip/m5jjmV7gAb31qLKOsAs+IoERdrEKRoBUMZM0pFJ9PCojoBZzgH7KqP8gx\nj0zPLsaSuwKBgH63WAanuwSSTRSkqsmQ2/dYodKj/LuPS6IPG9NwdFOoM9h23CSI\nzGsgXOZv7MvFQ2fmHJCGB+IwWuplQp6kmNP0EpDpmCLOo8sVAlYACRDVNeqWcVhA\nwaHvE9IkC2y7y23gPuH+o7gPAX95svPQhlsB0E+8BkzzyADYuzXPnVB5AoGAYul3\nvp1rWbRisOgefK5ZOGE38vnOC1DySVdOAxDzp//bCRxiJinfzDoySn3/6xZIuPJw\nITpf4QZIU5hmm9k5UA7hfQxrvweUhm0lQnz2teyvJ0IHMzPSGc95yxKyNFzbTF6z\nS/8NAtHyTRVh3gL9Kei/pJT85wovK/be+IT4XFcCgYAGLwxWJ24u8rPXuJqdIYKW\nifh8ccbgERSyqV0piKJJGBVWJxON+wzGucLJ71AvnFsyWombs9gOltWzAOqxbgV0\nfZonhNNaOVZrNZ/WPvKMQsKRWXmgYGylC9iDBE8DUHOY4G5wIU2hn/fh4JY9C8QJ\nMGJJ9eisRDnPwvvjWOTxWA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "elepotmail0-gmail-com@bicyclemileagedatabase.iam.gserviceaccount.com",
+  "client_id": "117433320774545643168",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/elepotmail0-gmail-com%40bicyclemileagedatabase.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
