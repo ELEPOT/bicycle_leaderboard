@@ -1,4 +1,4 @@
-//Generated Date: Mon, 18 Dec 2023 13:21:56 GMT
+//Generated Date: Fri, 01 Mar 2024 08:31:48 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -8,6 +8,7 @@
 #include <U8g2lib.h>
 #include <Wire.h>
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
+#include <WiFiClientSecure.h>
 #include <WiFiClientSecure.h>
 
 boolean _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
@@ -20,11 +21,74 @@ String myNFC_UID="";
 uint8_t myNFC_UID_array[] = { 0, 0, 0, 0, 0, 0, 0 };
 uint8_t myNFC_UID_Length;
 
-char _lwifi_ssid[] = "ELEPOT_DESKTOP";
-char _lwifi_pass[] = "hikari00";
+char _lwifi_ssid[] = "makerG103";
+char _lwifi_pass[] = "G103maker";
+void initWiFi() {
+
+  for (int i=0;i<2;i++) {
+    WiFi.begin(_lwifi_ssid, _lwifi_pass);
+
+    delay(1000);
+    Serial.println("");
+    Serial.print("Connecting to ");
+    Serial.println(_lwifi_ssid);
+
+    long int StartTime=millis();
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        if ((StartTime+5000) < millis()) break;
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+      Serial.println("");
+      Serial.println("STAIP address: ");
+      Serial.println(WiFi.localIP());
+      Serial.println("");
+
+      break;
+    }
+  }
+}
+
 const char* asId="AKfycbyR-Yp-uu4nIvnjvnkILaQ5AX8yFxp-UpBO-Sqs0su3ai1N_BvQsz_Q";
 String sheetId="";
 String sheetTag="";
+
+String tcp_https(String type,String domain,String request,int port,int waittime) {
+  String getAll="", getBody="";
+  WiFiClientSecure client_tcp;
+  client_tcp.setInsecure();
+  if (client_tcp.connect(domain.c_str(), port)) {
+    //Serial.println("Connected to "+domain+" successfully.");
+    client_tcp.println(type + " " + request + " HTTP/1.1");
+    client_tcp.println("Host: " + domain);
+    client_tcp.println("Connection: close");
+    client_tcp.println("Content-Length: 0");
+    client_tcp.println();
+    boolean state = false;
+    long startTime = millis();
+    while ((startTime + waittime) > millis()) {
+      while (client_tcp.available()) {
+        char c = client_tcp.read();
+        if (c == '\n') {
+          if (getAll.length()==0) state=true;
+           getAll = "";
+        }
+        else if (c != '\r')
+          getAll += String(c);
+          if (state==true) getBody += String(c);
+          startTime = millis();
+        }
+        if (getBody.length()!= 0) break;
+      }
+      client_tcp.stop();
+  }
+  else {
+    getBody="Connected to "+domain+" failed.";
+    Serial.println("Connected to "+domain+" failed.");
+  }
+  return getBody;
+}
 
 void HandleCard(String _E5_8D_A1_E8_99_9F) {
   if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
@@ -32,6 +96,8 @@ void HandleCard(String _E5_8D_A1_E8_99_9F) {
       DrawText("寫入資料庫中...");
       sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
       DrawText("還車成功！請離卡");
+      delay(1000);
+      DrawText(String("你是第")+String(String(tcp_https("GET", "bike.elepot.dev/data/send/", (String("?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000))+String("名")));
       _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
       _E8_B7_9D_E9_9B_A2 = 0;
     } else {
@@ -116,17 +182,12 @@ void  sendToGoogleSheets(const String& dateInclude,const String& data)
 void setup()
 {
   nfc.begin();
+  initWiFi();
   u8g2.begin();
   u8g2.setFont(u8g2_font_10x20_me);
   u8g2.enableUTF8Print();
   nfc.setPassiveActivationRetries(0xFF);
   nfc.SAMConfig();
-  WiFi.disconnect();
-  WiFi.softAPdisconnect(true);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(_lwifi_ssid, _lwifi_pass);
-  while (WiFi.status() != WL_CONNECTED) { delay(500); }
-  delay(300);
   sheetId="1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI";
   sheetTag=URLEncode("Database");
   u8g2.setFont(u8g2_font_unifont_t_chinese1);
