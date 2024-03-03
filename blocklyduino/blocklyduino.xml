@@ -6,6 +6,7 @@
     <variable id=",LE?+Z3}h{,d8[sUJ?K%">text</variable>
     <variable id="fc*j!UWK[uMqi;Buu^l8">距離</variable>
     <variable id=":y#T=09_GcH_/=s2@f8F">上一次偵測到的時間</variable>
+    <variable id="o^ATS_ulr5Ml.,u*)J|j">回覆</variable>
   </variables>
   <block type="board_initializes_setup" id="0" x="90" y="30">
     <field name="BOARD_TYPE">ESP32</field>
@@ -61,12 +62,12 @@
                           <block type="esp32_wifi_wait_until_ready" id="/ns.DgX[eBnp4OvVn1qZ">
                             <value name="SSID">
                               <block type="text" id=",On9Ov[clcI?H5_JODo|">
-                                <field name="TEXT">makerG103</field>
+                                <field name="TEXT">mist3</field>
                               </block>
                             </value>
                             <value name="PASSWORD">
                               <block type="text" id="s-vntCX$v1!%52PAwEPq">
-                                <field name="TEXT">G103maker</field>
+                                <field name="TEXT">juli0223</field>
                               </block>
                             </value>
                             <next>
@@ -356,58 +357,85 @@
                               </block>
                             </value>
                             <next>
-                              <block type="procedures_callnoreturn" id="T[4cZlE/Cua(Nt0??~VQ">
-                                <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
-                                <value name="VAR">
-                                  <block type="lists_create_with" id="pne1{Zv/B~!{*W9]h@y{" inline="0">
-                                    <mutation items="1"></mutation>
-                                    <value name="ADD0">
-                                      <block type="text_join" id="L9,6}7rv^PP|/yU$`lu|">
+                              <block type="variables_set" id="61?|N7C(rpww=2uynWvd">
+                                <field name="POSITION">local</field>
+                                <field name="TYPE">String</field>
+                                <field name="VAR" id="o^ATS_ulr5Ml.,u*)J|j">回覆</field>
+                                <value name="VALUE">
+                                  <shadow type="math_number" id="C(:Jk[e(yk*r`a`LC3;:">
+                                    <field name="NUM">0</field>
+                                  </shadow>
+                                  <block type="tcp_https_esp32" id="JZq/~gB(b*rj;^Z5FVCB">
+                                    <field name="type">GET</field>
+                                    <value name="domain">
+                                      <block type="text" id="x-tVZS%.,~9z*yS9TV3+">
+                                        <field name="TEXT">bike.elepot.dev</field>
+                                      </block>
+                                    </value>
+                                    <value name="request">
+                                      <block type="text_join" id="nab0+{|KJMnfR!TebSM+">
                                         <mutation items="2"></mutation>
                                         <value name="ADD0">
-                                          <block type="text" id=";s(#%]7zd?*$VoGGi5(y">
-                                            <field name="TEXT">你是第</field>
+                                          <block type="text" id="j.ic#|z/5WW*?Pj5J,4i">
+                                            <field name="TEXT">/data/send/?id=</field>
                                           </block>
                                         </value>
                                         <value name="ADD1">
-                                          <block type="text_join" id="S}MapI}n;7vj*V@Nd2$=">
-                                            <mutation items="2"></mutation>
+                                          <block type="variables_get" id="P4i2]1q2Rh6A9m8P`V/L">
+                                            <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <value name="port">
+                                      <block type="math_number" id="Ot$Ge|#eMiZ3Q+5-`)WV">
+                                        <field name="NUM">443</field>
+                                      </block>
+                                    </value>
+                                    <value name="timeout">
+                                      <block type="math_number" id="sl#+.TRNv:(lZqCjxNrc">
+                                        <field name="NUM">3000</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="procedures_callnoreturn" id="T[4cZlE/Cua(Nt0??~VQ">
+                                    <mutation xmlns="http://www.w3.org/1999/xhtml" name="DrawText"></mutation>
+                                    <value name="VAR">
+                                      <block type="lists_create_with" id="pne1{Zv/B~!{*W9]h@y{" inline="false">
+                                        <mutation items="1"></mutation>
+                                        <value name="ADD0">
+                                          <block type="text_join" id="L9,6}7rv^PP|/yU$`lu|">
+                                            <mutation items="3"></mutation>
                                             <value name="ADD0">
-                                              <block type="tcp_https_esp32" id="JZq/~gB(b*rj;^Z5FVCB">
-                                                <field name="type">GET</field>
-                                                <value name="domain">
-                                                  <block type="text" id="x-tVZS%.,~9z*yS9TV3+">
-                                                    <field name="TEXT">bike.elepot.dev/data/send/</field>
+                                              <block type="text" id=";s(#%]7zd?*$VoGGi5(y">
+                                                <field name="TEXT">你是第</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD1">
+                                              <block type="text_getSubstring" id="#8a9~?9~B-,Qz6aVt$m9">
+                                                <mutation at1="true" at2="true"></mutation>
+                                                <field name="WHERE1">FROM_START</field>
+                                                <field name="WHERE2">FROM_END</field>
+                                                <value name="STRING">
+                                                  <block type="variables_get" id="mCcHgPI#Xdh!ZYP|`sup">
+                                                    <field name="VAR" id="o^ATS_ulr5Ml.,u*)J|j">回覆</field>
                                                   </block>
                                                 </value>
-                                                <value name="request">
-                                                  <block type="text_join" id="nab0+{|KJMnfR!TebSM+">
-                                                    <mutation items="2"></mutation>
-                                                    <value name="ADD0">
-                                                      <block type="text" id="j.ic#|z/5WW*?Pj5J,4i">
-                                                        <field name="TEXT">?id=</field>
-                                                      </block>
-                                                    </value>
-                                                    <value name="ADD1">
-                                                      <block type="variables_get" id="P4i2]1q2Rh6A9m8P`V/L">
-                                                        <field name="VAR" id="Kp-H/z-LiyYR[PawP`n7">卡號</field>
-                                                      </block>
-                                                    </value>
+                                                <value name="AT1">
+                                                  <block type="math_number" id="o/l[DTiF#Gg.^id5+rc.">
+                                                    <field name="NUM">4</field>
                                                   </block>
                                                 </value>
-                                                <value name="port">
-                                                  <block type="math_number" id="Ot$Ge|#eMiZ3Q+5-`)WV">
-                                                    <field name="NUM">443</field>
-                                                  </block>
-                                                </value>
-                                                <value name="timeout">
-                                                  <block type="math_number" id="sl#+.TRNv:(lZqCjxNrc">
-                                                    <field name="NUM">3000</field>
+                                                <value name="AT2">
+                                                  <block type="math_number" id="%/Dk`=fG*uD+9mV}H{VH">
+                                                    <field name="NUM">8</field>
                                                   </block>
                                                 </value>
                                               </block>
                                             </value>
-                                            <value name="ADD1">
+                                            <value name="ADD2">
                                               <block type="text" id="]V5hm7J%Br^~zl2Mo=Es">
                                                 <field name="TEXT">名</field>
                                               </block>
@@ -416,27 +444,27 @@
                                         </value>
                                       </block>
                                     </value>
-                                  </block>
-                                </value>
-                                <next>
-                                  <block type="variables_set3" id="lre3~(#0miEt:#K)klh`">
-                                    <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
-                                    <value name="DELTA">
-                                      <shadow type="math_number" id="j7F_KW3AS7Fnc}*[q-Lk">
-                                        <field name="NUM">0</field>
-                                      </shadow>
-                                      <block type="logic_boolean" id="CbPiQNt*}eAABeqTK:$L">
-                                        <field name="BOOL">FALSE</field>
-                                      </block>
-                                    </value>
                                     <next>
-                                      <block type="variables_set3" id="ohgmuJq/;z+hg52J#/@m">
-                                        <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
+                                      <block type="variables_set3" id="lre3~(#0miEt:#K)klh`">
+                                        <field name="VAR" id="]Qx0ge]D^Kj;6v,1iIZ=">正在被騎</field>
                                         <value name="DELTA">
-                                          <shadow type="math_number" id="]w4=8@)?9F`awWV=I[{:">
+                                          <shadow type="math_number" id="j7F_KW3AS7Fnc}*[q-Lk">
                                             <field name="NUM">0</field>
                                           </shadow>
+                                          <block type="logic_boolean" id="CbPiQNt*}eAABeqTK:$L">
+                                            <field name="BOOL">FALSE</field>
+                                          </block>
                                         </value>
+                                        <next>
+                                          <block type="variables_set3" id="ohgmuJq/;z+hg52J#/@m">
+                                            <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
+                                            <value name="DELTA">
+                                              <shadow type="math_number" id="]w4=8@)?9F`awWV=I[{:">
+                                                <field name="NUM">0</field>
+                                              </shadow>
+                                            </value>
+                                          </block>
+                                        </next>
                                       </block>
                                     </next>
                                   </block>

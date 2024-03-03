@@ -1,4 +1,4 @@
-//Generated Date: Fri, 01 Mar 2024 08:31:48 GMT
+//Generated Date: Sun, 03 Mar 2024 12:50:35 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -21,8 +21,8 @@ String myNFC_UID="";
 uint8_t myNFC_UID_array[] = { 0, 0, 0, 0, 0, 0, 0 };
 uint8_t myNFC_UID_Length;
 
-char _lwifi_ssid[] = "makerG103";
-char _lwifi_pass[] = "G103maker";
+char _lwifi_ssid[] = "mist3";
+char _lwifi_pass[] = "juli0223";
 void initWiFi() {
 
   for (int i=0;i<2;i++) {
@@ -97,7 +97,8 @@ void HandleCard(String _E5_8D_A1_E8_99_9F) {
       sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
       DrawText("還車成功！請離卡");
       delay(1000);
-      DrawText(String("你是第")+String(String(tcp_https("GET", "bike.elepot.dev/data/send/", (String("?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000))+String("名")));
+      String _E5_9B_9E_E8_A6_86 = (tcp_https("GET", "bike.elepot.dev", (String("/data/send/?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000));
+      DrawText(String("你是第")+String(_E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8))+String("名"));
       _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
       _E8_B7_9D_E9_9B_A2 = 0;
     } else {
