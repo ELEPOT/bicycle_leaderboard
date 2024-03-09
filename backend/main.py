@@ -53,6 +53,10 @@ def leaderboard():
     # 將 html 表格回傳給使用者
     return render_template('index.html', table=table.to_html())
 
+@app.route("/login")
+def login():
+    return render_template('login.html')
+
 
 @app.route("/data/send/")
 def get_ranking():

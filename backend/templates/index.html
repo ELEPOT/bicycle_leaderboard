@@ -2,11 +2,12 @@
 <html>
     <head>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <title>共享單車</title>
     </head>
-
     <body>
-        {{table|safe}}
         <button onclick="login()">Login</button>
+        <button onclick="reg()">Register</button>
+        {{table|safe}}
         <script src="{{ url_for('static',filename='script/script.js') }}"></script>
     </body>
 </html>
