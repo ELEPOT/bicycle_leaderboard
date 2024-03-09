@@ -57,6 +57,25 @@ def leaderboard():
 def login():
     return render_template('login.html')
 
+@app.route("/login_auth")
+def login_auth( ):
+    name = request.args.get('name')
+    password = request.args.get('hash')
+    gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
+    url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
+    sht = gc.open_by_url(url)
+    wks = sht[0]
+    a_name = wks.row[4]
+    a_password = wks.row[5]
+    index = zip(a_name, a_password)
+    for i in index:
+        if name == i[0] and password == i[1]:
+            return True
+        else:
+            pass
+    return False
+
+
 
 @app.route("/data/send/")
 def get_ranking():

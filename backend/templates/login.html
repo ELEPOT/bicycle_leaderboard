@@ -5,10 +5,11 @@
     <title>Login</title>
 </head>
 <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.11.0/sha256.js"></script>
     <p>User Name</p>
-    <input>
+    <input id="name">
     <p>Password</p>
-    <input type="password">
+    <input type="password", id="password">
     <button onclick="submit()">送出</button>
     <script src="{{ url_for('static',filename='script/login.js') }}"></script>
 </body>
