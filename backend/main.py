@@ -3,16 +3,16 @@ import pygsheets as sheet
 from flask import Flask, render_template, request
 from HTMLTable import HTMLTable
 app = Flask(__name__)
-# 以下函式會在使用者訪問網站時呼叫
 
 
 def get_sorted_total_distance():
-    i = 1
     # 開啟 Google 表單
     gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
     url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
     sht = gc.open_by_url(url)
     wks = sht[0]
+
+    i = 1
 
     total_distances = {}
 
@@ -39,6 +39,7 @@ def get_sorted_total_distance():
     return total_distances
 
 
+# 以下函式會在使用者訪問網站時呼叫
 @app.route("/")
 def leaderboard():
     total_distances = get_sorted_total_distance()
@@ -61,20 +62,23 @@ def login():
 
 @app.route("/login_auth")
 def login_auth():
-    name = request.args.get('name')
-    password = request.args.get('hash')
     gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
     url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
     sht = gc.open_by_url(url)
     wks = sht[0]
-    a_names = wks.row[4]
-    a_passwords = wks.row[5]
 
-    for a_name, a_password in zip(a_names, a_passwords):
+    name = request.args.get('name')
+    password = request.args.get('hash')
+
+    for row in wks:
+        a_name = row[3]
+        a_password = row[4]
+
         if name == a_name and password == a_password:
-            return True
+            print("success")
+            return "True"
 
-    return False
+    return "False"
 
 
 @app.route("/data/send/")
