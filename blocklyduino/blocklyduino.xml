@@ -407,10 +407,10 @@
                                         <mutation items="1"></mutation>
                                         <value name="ADD0">
                                           <block type="text_join" id="L9,6}7rv^PP|/yU$`lu|">
-                                            <mutation items="3"></mutation>
+                                            <mutation items="9"></mutation>
                                             <value name="ADD0">
                                               <block type="text" id=";s(#%]7zd?*$VoGGi5(y">
-                                                <field name="TEXT">你是第</field>
+                                                <field name="TEXT">恭喜獲得第</field>
                                               </block>
                                             </value>
                                             <value name="ADD1">
@@ -438,6 +438,55 @@
                                             <value name="ADD2">
                                               <block type="text" id="]V5hm7J%Br^~zl2Mo=Es">
                                                 <field name="TEXT">名</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD3">
+                                              <block type="text_quotationmark" id="/^#l9x3,BF6`4R^+-LoC">
+                                                <field name="TEXT">\n</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD4">
+                                              <block type="text" id="9mb5|Qo/]]SHR{eos@iX">
+                                                <field name="TEXT">你消耗了</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD5">
+                                              <block type="convert_float_str" id="q3q*~17)fQ.J!dV^YDup">
+                                                <value name="MY_VAR">
+                                                  <block type="math_arithmetic" id="[.doWZcUhx*p]`WEzR$h">
+                                                    <field name="OP">MULTIPLY</field>
+                                                    <value name="A">
+                                                      <block type="variables_get" id="Pp!WQJj5Jy?cnF{bZN]W">
+                                                        <field name="VAR" id="fc*j!UWK[uMqi;Buu^l8">距離</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="B">
+                                                      <block type="math_number" id="Tk48?/L^1^yFMIy@ZUQk">
+                                                        <field name="NUM">0.013</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <value name="PLACES">
+                                                  <block type="math_number" id="U3gL/FvigI^Q=%[)mG}h">
+                                                    <field name="NUM">2</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <value name="ADD6">
+                                              <block type="text" id="k#w,:6+no(y{X/@Uc2).">
+                                                <field name="TEXT">大卡</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD7">
+                                              <block type="text_quotationmark" id="dL0BfbulEqEi^TR/:y72">
+                                                <field name="TEXT">\n</field>
+                                              </block>
+                                            </value>
+                                            <value name="ADD8">
+                                              <block type="text" id="q~ni0|5XxB[:l$l)v(1N">
+                                                <field name="TEXT">請到bike.elepot.dev/a確認折扣</field>
                                               </block>
                                             </value>
                                           </block>
@@ -540,7 +589,7 @@
       </block>
     </statement>
   </block>
-  <block type="procedures_defnoreturn" id="`*IAhVej^Qt}U7PlBj?z" x="70" y="1290">
+  <block type="procedures_defnoreturn" id="`*IAhVej^Qt}U7PlBj?z" x="90" y="1190">
     <field name="NAME">DrawText</field>
     <value name="VAR">
       <shadow type="lists_create_with" inline="true">
@@ -593,7 +642,7 @@
       </block>
     </statement>
   </block>
-  <block type="esp32_irq_pin_task" id="bB.st`]9ILddudo]U4oJ" x="90" y="1970">
+  <block type="esp32_irq_pin_task" id="bB.st`]9ILddudo]U4oJ" x="50" y="1550">
     <value name="F_NAME">
       <block type="text" id="y6!PPC081/*e$4j4?ZI8">
         <field name="TEXT">OnMagnetEnter</field>

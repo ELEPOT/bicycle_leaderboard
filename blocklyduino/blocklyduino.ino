@@ -1,4 +1,4 @@
-//Generated Date: Sun, 03 Mar 2024 12:50:35 GMT
+//Generated Date: Sun, 10 Mar 2024 01:42:45 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -98,7 +98,7 @@ void HandleCard(String _E5_8D_A1_E8_99_9F) {
       DrawText("還車成功！請離卡");
       delay(1000);
       String _E5_9B_9E_E8_A6_86 = (tcp_https("GET", "bike.elepot.dev", (String("/data/send/?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000));
-      DrawText(String("你是第")+String(_E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8))+String("名"));
+      DrawText(String("恭喜獲得第")+String(_E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8))+String("名")+String('\\n')+String("你消耗了")+String(String((_E8_B7_9D_E9_9B_A2 * 0.013),2))+String("大卡")+String('\\n')+String("請到bike.elepot.dev/a確認折扣"));
       _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
       _E8_B7_9D_E9_9B_A2 = 0;
     } else {
