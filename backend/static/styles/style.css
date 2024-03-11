@@ -21,3 +21,10 @@ caption {
 }
 
 tr:hover {background-color: #a98b73;}
+p{
+    text-align: center;
+    font-size: 5vw;
+}
+button{
+    text-align: center;
+}

@@ -13,6 +13,8 @@ function submit() {
        document.write("user name or password is incorrect")
     }
     else {
-       document.location.href="/"
+      document.cookie = `user=${name}`
+      document.cookie = `token=${hash}`
+      document.location.href="/"
     }
 }
