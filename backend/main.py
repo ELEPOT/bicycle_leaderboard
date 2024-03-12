@@ -5,12 +5,19 @@ from HTMLTable import HTMLTable
 app = Flask(__name__)
 
 
-def get_sorted_total_distance():
-    # 開啟 Google 表單
+def get_newest_worksheet():
     gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
     url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
     sht = gc.open_by_url(url)
     wks = sht[0]
+
+    return wks
+
+
+def get_sorted_total_distance():
+    # 開啟 Google 表單
+
+    wks = get_newest_worksheet()
 
     i = 1
 
@@ -59,6 +66,7 @@ def leaderboard():
 def login():
     return render_template('login.html')
 
+
 @app.route("/register")
 def register():
     return render_template('register.html')
@@ -69,13 +77,10 @@ def login_auth():
     name = request.args.get('name')
     password = request.args.get('hash')
 
-    if name == "" and password == "":
+    if name == "":
         return "False"
 
-    gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
-    url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
-    sht = gc.open_by_url(url)
-    wks = sht[0]
+    wks = get_newest_worksheet()
 
     for row in wks:
         a_name = row[3]
@@ -86,6 +91,24 @@ def login_auth():
             return "True"
 
     return "False"
+
+
+@app.route("/make_account")
+def make_account():
+    name = request.args.get('name')
+    password = request.args.get('hash')
+    i_d = request.args.get('id')
+
+    wks = get_newest_worksheet()
+
+    for index, row in enumerate(wks):
+        if row[3] == "" and row[4] == "":
+            wks.update_value(f"D{index + 1}", name)
+            wks.update_value(f"E{index + 1}", password)
+            wks.update_value(f"F{index + 1}", i_d)
+
+            break
+
 
 @app.route("/data/send/")
 def get_ranking():

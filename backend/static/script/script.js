@@ -1,6 +1,3 @@
-const httpRequest = new XMLHttpRequest();
-var cookie = document.cookie.split(";")
-
 let user = getCookie("user")
 let token = getCookie("token")
 
