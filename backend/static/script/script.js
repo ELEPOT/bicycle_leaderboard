@@ -14,6 +14,11 @@ if(httpRequest.responseText == "True") {
     const logout = document.createElement('button');
     logout.textContent = `Logout`
     document.body.insertBefore(logout, document.body.firstChild);
+    logout.addEventListener('click', () => {
+        document.cookie = 'user' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'token' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.location.href="/"
+      });
 }
 else{
     console.log("Faild")
@@ -25,6 +30,6 @@ function login() {
     document.location.href="/login"
 }
 
-function reg(RFID) {
+function reg() {
     console.log("reg");
 }
