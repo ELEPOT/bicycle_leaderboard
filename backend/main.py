@@ -59,16 +59,23 @@ def leaderboard():
 def login():
     return render_template('login.html')
 
+@app.route("/register")
+def register():
+    return render_template('register.html')
+
 
 @app.route("/login_auth")
 def login_auth():
+    name = request.args.get('name')
+    password = request.args.get('hash')
+
+    if name == "" and password == "":
+        return "False"
+
     gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
     url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
     sht = gc.open_by_url(url)
     wks = sht[0]
-
-    name = request.args.get('name')
-    password = request.args.get('hash')
 
     for row in wks:
         a_name = row[3]
@@ -79,24 +86,6 @@ def login_auth():
             return "True"
 
     return "False"
-
-@app.route("/check")
-def check():
-    gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
-    url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
-    sht = gc.open_by_url(url)
-    wks = sht[0]
-
-    name = request.args.get('name')
-    password = request.args.get('token')
-
-    for row in wks:
-        a_name = row[3]
-        a_password = row[4]
-        if name == a_name and password == a_password:
-            return "True"
-        else:
-            "False"
 
 @app.route("/data/send/")
 def get_ranking():

@@ -4,17 +4,12 @@ function submit() {
     var password = document.getElementById('password').value
     var hash = sha256(password)
 
-    httpRequest.open("GET",  `http://127.0.0.1:5000/login_auth?name=${name}&hash=${hash}`, false)
-    httpRequest.setRequestHeader('Content-type', 'application/ecmascript');
-    httpRequest.setRequestHeader('Access-Control-Allow-Origin', '*');
-    httpRequest.send();
-
-    if (httpRequest.responseText === "False") {
-       document.write("user name or password is incorrect")
+    if (http_get(`http://127.0.0.1:5000/login_auth?name=${name}&hash=${hash}`) === "False") {
+        document.write("user name or password is incorrect")
     }
     else {
-      document.cookie = `user=${name}`
-      document.cookie = `token=${hash}`
-      document.location.href="/"
+        setCookie("user", name)
+        setCookie("token", hash)
+        document.location.href="/"
     }
 }

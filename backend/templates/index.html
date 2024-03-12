@@ -5,9 +5,11 @@
         <title>共享單車</title>
     </head>
     <body>
-        <button onclick="login()", id="login">Login</button>
-        <button onclick="reg()", id="reg">Register</button>
+        <button onclick="login()", id="login">登入</button>
+        <button onclick="reg()", id="reg">註冊</button>
         {{table|safe}}
+        <script src="{{ url_for('static',filename='script/cookie.js') }}"></script>
+        <script src="{{ url_for('static',filename='script/http_get.js') }}"></script>
         <script src="{{ url_for('static',filename='script/script.js') }}"></script>
     </body> 
 </html>
