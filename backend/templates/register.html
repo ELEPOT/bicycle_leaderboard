@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>註冊</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.11.0/sha256.js"></script>
-    <p>悠遊卡卡號</p>
+    <h3>悠遊卡卡號</h3>
     <input id="id">
-    <p>使用者名稱</p>
+    <h3>使用者名稱</h3>
     <input id="name">
-    <p>密碼</p>
+    <h3>密碼</h3>
     <input type="password", id="password">
+    <br></br>
     <button onclick="submit()">送出</button>
     <script src="{{ url_for('static',filename='script/cookie.js') }}"></script>
     <script src="{{ url_for('static',filename='script/http_get.js') }}"></script>

@@ -5,7 +5,10 @@ function submit() {
 
     var hash = sha256(password)
 
-    http_get_async(`http://127.0.0.1:5000/make_account?name=${name}&hash=${hash}&id=${id}`)
-
-    document.location.href="/login"
+    if(http_get(`http://127.0.0.1:5000/make_account?name=${name}&hash=${hash}&id=${id}`) == "False"){
+        alert("this id or username has been used")
+    }
+    else{
+        document.location.href="/login"
+    }
 }

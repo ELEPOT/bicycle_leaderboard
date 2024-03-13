@@ -100,6 +100,12 @@ def make_account():
     i_d = request.args.get('id')
 
     wks = get_newest_worksheet()
+    for row in wks:
+        a_name = row[3]
+        a_id = row[5]
+        if name == a_name or i_d == a_id:
+            return "False"
+               
 
     for index, row in enumerate(wks):
         if row[3] == "" and row[4] == "":
@@ -107,7 +113,7 @@ def make_account():
             wks.update_value(f"E{index + 1}", password)
             wks.update_value(f"F{index + 1}", i_d)
 
-            break
+            return "True"
 
 
 @app.route("/data/send/")
