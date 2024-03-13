@@ -21,7 +21,7 @@ if(http_get(url) === "True") {
 }
 
 else {
-    console.log(httpRequest.responseText)
+    pass
 }
 
 console.log("start")
