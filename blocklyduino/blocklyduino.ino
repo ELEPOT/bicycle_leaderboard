@@ -1,4 +1,4 @@
-//Generated Date: Sun, 10 Mar 2024 01:42:45 GMT
+//Generated Date: Wed, 13 Mar 2024 08:57:49 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -21,8 +21,8 @@ String myNFC_UID="";
 uint8_t myNFC_UID_array[] = { 0, 0, 0, 0, 0, 0, 0 };
 uint8_t myNFC_UID_Length;
 
-char _lwifi_ssid[] = "mist3";
-char _lwifi_pass[] = "juli0223";
+char _lwifi_ssid[] = "makerG103";
+char _lwifi_pass[] = "G103maker";
 void initWiFi() {
 
   for (int i=0;i<2;i++) {
@@ -98,7 +98,16 @@ void HandleCard(String _E5_8D_A1_E8_99_9F) {
       DrawText("還車成功！請離卡");
       delay(1000);
       String _E5_9B_9E_E8_A6_86 = (tcp_https("GET", "bike.elepot.dev", (String("/data/send/?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000));
-      DrawText(String("恭喜獲得第")+String(_E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8))+String("名")+String('\\n')+String("你消耗了")+String(String((_E8_B7_9D_E9_9B_A2 * 0.013),2))+String("大卡")+String('\\n')+String("請到bike.elepot.dev/a確認折扣"));
+      DrawText(String("恭喜獲得第")+String(_E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8))+String("名"));
+      delay(1000);
+      DrawText(String("你消耗了")+String(String((_E8_B7_9D_E9_9B_A2 * 0.013),2))+String("大卡"));
+      delay(1000);
+      DrawText("確認折扣請到");
+      delay(1000);
+      DrawText("bike.elepot.dev");
+      delay(3000);
+      DrawText(String("卡號")+String(_E5_8D_A1_E8_99_9F));
+      delay(30000);
       _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
       _E8_B7_9D_E9_9B_A2 = 0;
     } else {
@@ -123,7 +132,7 @@ void DrawText(String text) {
 void IRAM_ATTR OnMagnetEnter()
 {
   if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
-    if (millis() - _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 > 50) {
+    if (millis() - _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 > 100) {
       _E8_B7_9D_E9_9B_A2 = _E8_B7_9D_E9_9B_A2 + 1.2;
       _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 = millis();
     }
