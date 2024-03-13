@@ -5,7 +5,7 @@ function submit() {
     var hash = sha256(password)
 
     if (http_get(`http://127.0.0.1:5000/login_auth?name=${name}&hash=${hash}`) === "False") {
-        alert("user name or password is incorrect")
+        alert("使用者名稱或密碼錯誤")
     }
     else {
         setCookie("user", name)

@@ -1,13 +1,17 @@
 # 匯入所需模組
 import pygsheets as sheet
-from flask import Flask, render_template, request
 from HTMLTable import HTMLTable
+from flask import Flask, render_template, request
+from datetime import datetime
+
 app = Flask(__name__)
+
+total_distances = list()
 
 
 def get_newest_worksheet():
-    gc = sheet.authorize(service_file='auth/bicyclemileagedatabase-e9a752e9691d.json')
-    url = 'https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765'
+    gc = sheet.authorize(service_file="auth/bicyclemileagedatabase-e9a752e9691d.json")
+    url = "https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765"
     sht = gc.open_by_url(url)
     wks = sht[0]
 
@@ -19,63 +23,71 @@ def get_sorted_total_distance():
 
     wks = get_newest_worksheet()
 
-    i = 1
+    _total_distances = {}
 
-    total_distances = {}
+    id_to_username = dict(
+        zip(
+            wks.get_col(6, include_tailing_empty=False),
+            wks.get_col(4, include_tailing_empty=False),
+        )
+    )
 
-    # 把同卡號的里程數加起來，直到讀到表單最後一行為止
+    # 把同使用者的里程數加起來，直到讀到表單最後一行為止
     for row in wks:
         distance = row[2]
         card_id = row[1]
 
-        if distance == '' or card_id == '':
+        if distance == "" or card_id == "":
             break
 
-        else:
-            if card_id not in total_distances.keys():
-                total_distances[card_id] = float(distance)
-            else:
-                total_distances[card_id] += float(distance)
+        if card_id in id_to_username.keys():
+            username = id_to_username[card_id]
 
-        i += 1
+            if username not in _total_distances.keys():
+                _total_distances[username] = float(distance)
+            else:
+                _total_distances[username] += float(distance)
 
     # 將每個卡號的總里程數從大到小排列
-    total_distances = list(total_distances.items())
-    total_distances.sort(key=lambda elem: elem[1], reverse=True)
 
-    return total_distances
+    _total_distances = list(_total_distances.items())
+
+    _total_distances.sort(key=lambda elem: elem[1], reverse=True)
+
+    return _total_distances
 
 
 # 以下函式會在使用者訪問網站時呼叫
 @app.route("/")
 def leaderboard():
+    global total_distances
     total_distances = get_sorted_total_distance()
 
     # 將卡號與里程數轉換成 html 表格
-    table = HTMLTable(caption='共享單車排行榜')
+    table = HTMLTable(caption="共享單車排行榜")
 
-    table.append_header_rows([('名次', '卡號', '距離 (m)')])
+    table.append_header_rows([("名次", "使用者名稱", "距離 (m)")])
 
-    for ranking, (card_id, distance) in enumerate(total_distances):
-        table.append_data_rows([(ranking + 1, card_id, round(distance))])
+    for ranking, (username, distance) in enumerate(total_distances):
+        table.append_data_rows([(ranking + 1, username, round(distance))])
     # 將 html 表格回傳給使用者
-    return render_template('index.html', table=table.to_html())
+    return render_template("index.html", table=table.to_html())
 
 
 @app.route("/login")
 def login():
-    return render_template('login.html')
+    return render_template("login.html")
 
 
 @app.route("/register")
 def register():
-    return render_template('register.html')
+    return render_template("register.html")
 
 
 @app.route("/login_auth")
 def login_auth():
-    name = request.args.get('name')
-    password = request.args.get('hash')
+    name = request.args.get("name")
+    password = request.args.get("hash")
 
     if name == "":
         return "False"
@@ -95,37 +107,62 @@ def login_auth():
 
 @app.route("/make_account")
 def make_account():
-    name = request.args.get('name')
-    password = request.args.get('hash')
-    i_d = request.args.get('id')
+    name = request.args.get("name")
+    password = request.args.get("hash")
+    i_d = request.args.get("id")
 
     wks = get_newest_worksheet()
+
     for row in wks:
         a_name = row[3]
         a_id = row[5]
         if name == a_name or i_d == a_id:
             return "False"
-               
 
     for index, row in enumerate(wks):
         if row[3] == "" and row[4] == "":
-            wks.update_value(f"D{index + 1}", name)
-            wks.update_value(f"E{index + 1}", password)
-            wks.update_value(f"F{index + 1}", i_d)
+            wks.update_value((index + 1, 4), name)
+            wks.update_value((index + 1, 5), password)
+            wks.update_value((index + 1, 6), i_d)
 
-            return "True"
+    return "True"
+
+
+@app.route("/get_message")
+def get_message():
+    global total_distances
+
+    name = request.args.get("name")
+
+    for ranking, (username, distance) in enumerate(total_distances):
+        if username == name:
+            message = f"""
+            恭喜你獲得第{ranking + 1}名
+            總共騎乘 {distance} m
+            總共消耗 {round(distance * 0.013, 2)} 大卡
+            """
+
+            if distance > 1000:
+                message += "\n可獲得一次折扣"
+
+            return message
+
+    return ""
 
 
 @app.route("/data/send/")
 def get_ranking():
+    global total_distances
+
     total_distances = get_sorted_total_distance()
+
     for ranking, (card_id, distance) in enumerate(total_distances):
-        if card_id == request.args.get('id'):
+        if card_id == request.args.get("id"):
             return str(ranking + 1)
 
     raise f"Cannot get ranking of {request.args.get('id')}"
 
 
 # 開始伺服器
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()

@@ -11,25 +11,25 @@ if(http_get(url) === "True") {
     text.textContent = `Login as ${getCookie("user")}`
     document.body.insertBefore(text, document.body.firstChild);
     const logout = document.createElement('button');
-    logout.textContent = `Logout`
+    logout.textContent = `登出`
     document.body.insertBefore(logout, document.body.firstChild);
     logout.addEventListener('click', () => {
         deleteCookie("user")
         deleteCookie("token")
         document.location.href="/"
     });
+
+    let message = http_get(`http://127.0.0.1:5000/get_message?name=${user}`)
+
+    if (message !== "") {
+        alert(message)
+    }
 }
 
-else {
-    pass
-}
-
-console.log("start")
 function login() {
     console.log("login");
-    document.location.href="/login"
+    document.location.href = "/login"
 }
-
 function reg() {
     console.log("reg");
     document.location.href = "/register"
