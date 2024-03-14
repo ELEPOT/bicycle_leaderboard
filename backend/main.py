@@ -1,14 +1,13 @@
 # 匯入所需模組
-import pygsheets as sheet
-from HTMLTable import HTMLTable
-from flask import Flask, render_template, request
-from datetime import datetime
+import pygsheets as sheet# Google表單
+from HTMLTable import HTMLTable# HTML表格
+from flask import Flask, render_template, request# 網站架構
 
-app = Flask(__name__)
+app = Flask(__name__)# 定義Flask網站架構
 
-total_distances = list()
+total_distances = list()# 定義 total_distances
 
-
+# 獲得最新表格
 def get_newest_worksheet():
     gc = sheet.authorize(service_file="auth/bicyclemileagedatabase-e9a752e9691d.json")
     url = "https://docs.google.com/spreadsheets/d/1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI/edit#gid=861705765"
@@ -17,7 +16,7 @@ def get_newest_worksheet():
 
     return wks
 
-
+# 重新排列排名
 def get_sorted_total_distance():
     # 開啟 Google 表單
 
@@ -56,8 +55,7 @@ def get_sorted_total_distance():
 
     return _total_distances
 
-
-# 以下函式會在使用者訪問網站時呼叫
+# 首頁
 @app.route("/")
 def leaderboard():
     global total_distances
@@ -73,17 +71,17 @@ def leaderboard():
     # 將 html 表格回傳給使用者
     return render_template("index.html", table=table.to_html())
 
-
+# 登入介面
 @app.route("/login")
 def login():
     return render_template("login.html")
 
-
+# 註冊介面
 @app.route("/register")
 def register():
     return render_template("register.html")
 
-
+# 進首頁時的登入簡查API
 @app.route("/login_auth")
 def login_auth():
     name = request.args.get("name")
@@ -104,7 +102,7 @@ def login_auth():
 
     return "False"
 
-
+#註冊API
 @app.route("/make_account")
 def make_account():
     name = request.args.get("name")
@@ -127,7 +125,7 @@ def make_account():
 
     return "True"
 
-
+# 回傳排名，距離與卡路里
 @app.route("/get_message")
 def get_message():
     global total_distances
@@ -149,7 +147,7 @@ def get_message():
 
     return ""
 
-
+# 腳踏車端獲取排名API
 @app.route("/data/send/")
 def get_ranking():
     global total_distances
