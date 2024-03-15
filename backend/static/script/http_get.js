@@ -1,3 +1,4 @@
+//達成 http requests 的函式簡化
 function http_get(url) {
     const httpRequest = new XMLHttpRequest();
 
@@ -8,13 +9,3 @@ function http_get(url) {
 
     return httpRequest.responseText
 }
-
-function http_get_async(url) {
-    const httpRequest = new XMLHttpRequest();
-
-    httpRequest.open("GET", url, true);
-    httpRequest.setRequestHeader('Content-type', 'application/ecmascript');
-    httpRequest.setRequestHeader('Access-Control-Allow-Origin', '*');
-    httpRequest.send();
-}
-

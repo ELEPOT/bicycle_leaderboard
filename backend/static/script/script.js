@@ -2,8 +2,8 @@ let user = getCookie("user")
 let token = getCookie("token")
 
 let url = `http://127.0.0.1:5000/login_auth?name=${user}&hash=${token}`
-
-if(http_get(url) === "True") {
+//把cookie裡的使用者名稱,卡號與雜湊密碼傳入後端做判斷
+if(http_get(url) === "True") {//如果正確，改變HTML
     document.getElementById("login").remove()
     document.getElementById("reg").remove()
     console.log('login now')
@@ -20,16 +20,18 @@ if(http_get(url) === "True") {
     });
 
     let message = http_get(`http://127.0.0.1:5000/get_message?name=${user}`)
-
+    //彈出後端訊息
     if (message !== "") {
         alert(message)
     }
 }
 
+//登入按鈕程式
 function login() {
     console.log("login");
     document.location.href = "/login"
 }
+//註冊按鈕程式
 function reg() {
     console.log("reg");
     document.location.href = "/register"
