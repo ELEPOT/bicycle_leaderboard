@@ -3,9 +3,9 @@ import pygsheets as sheet# Google表單
 from HTMLTable import HTMLTable# HTML表格
 from flask import Flask, render_template, request# 網站架構
 
-app = Flask(__name__)# 定義Flask網站架構
+app = Flask(__name__)  # 定義Flask網站架構
 
-total_distances = list()# 定義 total_distances
+total_distances = list()   # 定義 total_distances
 
 # 獲得最新表格
 def get_newest_worksheet():

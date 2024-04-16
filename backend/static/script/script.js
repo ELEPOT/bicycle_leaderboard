@@ -1,7 +1,7 @@
 let user = getCookie("user")
 let token = getCookie("token")
 
-let url = `http://127.0.0.1:5000/login_auth?name=${user}&hash=${token}`
+let url = `https://bike.elepot.dev/login_auth?name=${user}&hash=${token}`
 //把cookie裡的使用者名稱,卡號與雜湊密碼傳入後端做判斷
 if(http_get(url) === "True") {//如果正確，改變HTML
     document.getElementById("login").remove()
