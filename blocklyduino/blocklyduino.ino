@@ -1,4 +1,4 @@
-//Generated Date: Wed, 13 Mar 2024 08:57:49 GMT
+//Generated Date: Tue, 16 Apr 2024 08:54:40 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -8,7 +8,6 @@
 #include <U8g2lib.h>
 #include <Wire.h>
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
-#include <WiFiClientSecure.h>
 #include <WiFiClientSecure.h>
 
 boolean _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
@@ -98,7 +97,12 @@ void HandleCard(String _E5_8D_A1_E8_99_9F) {
       DrawText("還車成功！請離卡");
       delay(1000);
       String _E5_9B_9E_E8_A6_86 = (tcp_https("GET", "bike.elepot.dev", (String("/data/send/?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000));
-      DrawText(String("恭喜獲得第")+String(_E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8))+String("名"));
+      _E5_9B_9E_E8_A6_86 = _E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8);
+      if (_E5_9B_9E_E8_A6_86 == "Null") {
+        DrawText("註冊以得知排名");
+      } else {
+        DrawText(String("恭喜獲得第")+String(_E5_9B_9E_E8_A6_86)+String("名"));
+      }
       delay(1000);
       DrawText(String("你消耗了")+String(String((_E8_B7_9D_E9_9B_A2 * 0.013),2))+String("大卡"));
       delay(1000);
@@ -127,16 +131,6 @@ void DrawText(String text) {
     u8g2.clear();
     u8g2.drawUTF8(0,14,String(text).c_str());
   } while ( u8g2.nextPage() );
-}
-
-void IRAM_ATTR OnMagnetEnter()
-{
-  if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
-    if (millis() - _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 > 100) {
-      _E8_B7_9D_E9_9B_A2 = _E8_B7_9D_E9_9B_A2 + 1.2;
-      _E4_B8_8A_E4_B8_80_E6_AC_A1_E5_81_B5_E6_B8_AC_E5_88_B0_E7_9A_84_E6_99_82_E9_96_93 = millis();
-    }
-  }
 }
 
 String readFromNFC_UID() {
@@ -174,8 +168,7 @@ String URLEncode(const char* msg)
 
 void  sendToGoogleSheets(const String& dateInclude,const String& data)
 {
-  static WiFiClientSecure sheetClient;
-  sheetClient.setInsecure();
+  static TLSClient sheetClient;
   const char* host="script.google.com";
   if (sheetClient.connect(host, 443)) {
       const String url = String() +"https://"+host+"/macros/s/"+asId+"/exec?type=insert&dateInclude="+dateInclude+"&sheetId="+sheetId+"&sheetTag="+sheetTag+"&data="+data;
@@ -196,14 +189,7 @@ void setup()
   u8g2.begin();
   u8g2.setFont(u8g2_font_10x20_me);
   u8g2.enableUTF8Print();
-  nfc.setPassiveActivationRetries(0xFF);
-  nfc.SAMConfig();
-  sheetId="1ANhQHgFkB4Ce9WfsSZ4gT-u6YW7g4n33WO7UtMNWouI";
-  sheetTag=URLEncode("Database");
-  u8g2.setFont(u8g2_font_unifont_t_chinese1);
-  pinMode(0, INPUT);
-  attachInterrupt(0,OnMagnetEnter,FALLING);
-  DrawText("借車請感應悠遊卡");
+
   Serial.begin(9600);
 
 }
