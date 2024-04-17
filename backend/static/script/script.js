@@ -19,7 +19,7 @@ if(http_get(url) === "True") {//如果正確，改變HTML
         document.location.href="/"
     });
 
-    let message = http_get(`http://127.0.0.1:5000/get_message?name=${user}`)
+    let message = http_get(`https://bike.elepot.dev/get_message?name=${user}`)
     //彈出後端訊息
     if (message !== "") {
         alert(message)

@@ -1,11 +1,12 @@
 # 匯入所需模組
-import pygsheets as sheet# Google表單
-from HTMLTable import HTMLTable# HTML表格
-from flask import Flask, render_template, request# 網站架構
+import pygsheets as sheet  # Google表單
+from HTMLTable import HTMLTable  # HTML表格
+from flask import Flask, render_template, request  # 網站架構
 
 app = Flask(__name__)  # 定義Flask網站架構
 
-total_distances = list()   # 定義 total_distances
+total_distances = list()  # 定義 total_distances
+
 
 # 獲得最新表格
 def get_newest_worksheet():
@@ -15,6 +16,7 @@ def get_newest_worksheet():
     wks = sht[0]
 
     return wks
+
 
 # 重新排列排名
 def get_sorted_total_distance():
@@ -55,6 +57,7 @@ def get_sorted_total_distance():
 
     return _total_distances
 
+
 # 首頁
 @app.route("/")
 def leaderboard():
@@ -71,15 +74,18 @@ def leaderboard():
     # 將 html 表格回傳給使用者
     return render_template("index.html", table=table.to_html())
 
+
 # 登入介面
 @app.route("/login")
 def login():
     return render_template("login.html")
 
+
 # 註冊介面
 @app.route("/register")
 def register():
     return render_template("register.html")
+
 
 # 進首頁時的登入簡查API
 @app.route("/login_auth")
@@ -102,7 +108,8 @@ def login_auth():
 
     return "False"
 
-#註冊API
+
+# 註冊API
 @app.route("/make_account")
 def make_account():
     name = request.args.get("name")
@@ -122,8 +129,10 @@ def make_account():
             wks.update_value((index + 1, 4), name)
             wks.update_value((index + 1, 5), password)
             wks.update_value((index + 1, 6), i_d)
+            break
 
     return "True"
+
 
 # 回傳排名，距離與卡路里
 @app.route("/get_message")
@@ -147,6 +156,7 @@ def get_message():
 
     return ""
 
+
 # 腳踏車端獲取排名API
 @app.route("/data/send/")
 def get_ranking():
@@ -154,11 +164,20 @@ def get_ranking():
 
     total_distances = get_sorted_total_distance()
 
-    for ranking, (card_id, distance) in enumerate(total_distances):
-        if card_id == request.args.get("id"):
+    wks = get_newest_worksheet()
+
+    username_to_id = dict(
+        zip(
+            wks.get_col(4, include_tailing_empty=False),
+            wks.get_col(6, include_tailing_empty=False),
+        )
+    )
+
+    for ranking, (username, distance) in enumerate(total_distances):
+        if username_to_id[username] == request.args.get("id"):
             return str(ranking + 1)
 
-    raise f"Cannot get ranking of {request.args.get('id')}"
+    return "Null"
 
 
 # 開始伺服器
