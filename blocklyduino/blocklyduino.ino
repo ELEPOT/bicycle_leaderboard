@@ -1,4 +1,4 @@
-//Generated Date: Tue, 16 Apr 2024 08:54:40 GMT
+//Generated Date: Wed, 17 Apr 2024 09:45:15 GMT
 
 #include <Wire.h>
 #include <PN532_I2C.h>
@@ -53,6 +53,26 @@ const char* asId="AKfycbyR-Yp-uu4nIvnjvnkILaQ5AX8yFxp-UpBO-Sqs0su3ai1N_BvQsz_Q";
 String sheetId="";
 String sheetTag="";
 
+void HandleCard(String _E5_8D_A1_E8_99_9F) {
+  if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
+    if (_E5_8D_A1_E8_99_9F == _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F) {
+      DrawText("寫入資料庫中...");
+      sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
+      DrawText("還車成功！請離卡");
+      delay(1000);
+      ShowGoodbyeMessage();
+      _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
+      _E8_B7_9D_E9_9B_A2 = 0;
+    } else {
+      DrawText("卡號錯誤！請換卡");
+    }
+  } else {
+    DrawText("借車成功！請離卡");
+    _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F = _E5_8D_A1_E8_99_9F;
+    _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = true;
+  }
+}
+
 String tcp_https(String type,String domain,String request,int port,int waittime) {
   String getAll="", getBody="";
   WiFiClientSecure client_tcp;
@@ -89,39 +109,24 @@ String tcp_https(String type,String domain,String request,int port,int waittime)
   return getBody;
 }
 
-void HandleCard(String _E5_8D_A1_E8_99_9F) {
-  if (_E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E) {
-    if (_E5_8D_A1_E8_99_9F == _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F) {
-      DrawText("寫入資料庫中...");
-      sendToGoogleSheets("1",URLEncode((String() + _E5_8D_A1_E8_99_9F + "," + _E8_B7_9D_E9_9B_A2).c_str()));
-      DrawText("還車成功！請離卡");
-      delay(1000);
-      String _E5_9B_9E_E8_A6_86 = (tcp_https("GET", "bike.elepot.dev", (String("/data/send/?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000));
-      _E5_9B_9E_E8_A6_86 = _E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8);
-      if (_E5_9B_9E_E8_A6_86 == "Null") {
-        DrawText("註冊以得知排名");
-      } else {
-        DrawText(String("恭喜獲得第")+String(_E5_9B_9E_E8_A6_86)+String("名"));
-      }
-      delay(1000);
-      DrawText(String("你消耗了")+String(String((_E8_B7_9D_E9_9B_A2 * 0.013),2))+String("大卡"));
-      delay(1000);
-      DrawText("確認折扣請到");
-      delay(1000);
-      DrawText("bike.elepot.dev");
-      delay(3000);
-      DrawText(String("卡號")+String(_E5_8D_A1_E8_99_9F));
-      delay(30000);
-      _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = false;
-      _E8_B7_9D_E9_9B_A2 = 0;
-    } else {
-      DrawText("卡號錯誤！請換卡");
-    }
+void ShowGoodbyeMessage() {
+  String _E5_9B_9E_E8_A6_86 = (tcp_https("GET", "bike.elepot.dev", (String("/data/send/?id=")+String(_E5_8D_A1_E8_99_9F)), 443, 3000));
+  _E5_9B_9E_E8_A6_86 = _E5_9B_9E_E8_A6_86.substring(4, _E5_9B_9E_E8_A6_86.length() + 1- 8);
+  _E5_9B_9E_E8_A6_86.trim();
+  if (_E5_9B_9E_E8_A6_86 == "Null") {
+    DrawText("註冊以得知排名");
   } else {
-    DrawText("借車成功！請離卡");
-    _E5_80_9F_E7_9A_84_E5_8D_A1_E8_99_9F = _E5_8D_A1_E8_99_9F;
-    _E6_AD_A3_E5_9C_A8_E8_A2_AB_E9_A8_8E = true;
+    DrawText(String("恭喜獲得第")+String(_E5_9B_9E_E8_A6_86)+String("名"));
   }
+  delay(1000);
+  DrawText(String("你消耗了")+String(String((_E8_B7_9D_E9_9B_A2 * 0.013),2))+String("大卡"));
+  delay(1000);
+  DrawText("確認折扣請到");
+  delay(1000);
+  DrawText("bike.elepot.dev");
+  delay(3000);
+  DrawText(String("卡號")+String(_E5_8D_A1_E8_99_9F));
+  delay(30000);
 }
 
 void DrawText(String text) {
